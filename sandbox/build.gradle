@@ -1,0 +1,4 @@
+apply plugin: 'war'
+apply plugin: 'java'
+apply plugin: 'application'
+mainClassName = "MyFirstProgram"
