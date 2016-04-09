@@ -4,30 +4,23 @@ public class MyFirstProgram {
 
   public static void main(String[] args) {
 
-    hello("World");
-    hello("Water");
-    hello("Fire");
+    hello("yours");
+    hello("ours");
+    hello("theirs");
 
-    double s = 5;
-    System.out.println("Площадь квадрата со стороной " + s + " равна " + area(s));
+    Square sq = new Square(5);
+    System.out.println("Площадь квадрата со стороной " + sq.side + " равна " + sq.area());
 
-    double a = 4, b = 9;
-    System.out.println("Площадь прямоугольника со сторонами " + a + " и " + b + " равна " + area(a, b));
+
+    Rectangle rc = new Rectangle(4, 9);
+    System.out.println("Площадь прямоугольника со сторонами " + rc.width + " и " + rc.height + " равна " + rc.area());
 
 
   }
 
-  public static void hello(String world) {
-    System.out.println("The " + world + " is yours!");
+  public static void hello(String whos) {
+    System.out.println("The World is " + whos + "!");
   }
 
-
-  public static double area(double side) {
-    return side * side;
-  }
-
-  public static double area(double a, double b) {
-    return a * b;
-  }
 
 }
