@@ -1,4 +1,6 @@
-public class MyFirstProgram 
+package ru.webarch.jstudy.sandbox;
+
+public class MyFirstProgram
 {
 
     public static void main (String[] args) 
