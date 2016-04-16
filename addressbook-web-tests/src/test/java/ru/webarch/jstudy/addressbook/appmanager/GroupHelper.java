@@ -4,12 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.webarch.jstudy.addressbook.model.GroupData;
 
-/**
- * Created by gripinskiy on 16.04.16.
- */
 public class GroupHelper extends HelperBase{
 
-    public GroupHelper(FirefoxDriver wd) {
+    GroupHelper(FirefoxDriver wd) {
         super(wd);
     }
 

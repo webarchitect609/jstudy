@@ -68,6 +68,7 @@ public class ContactData {
         return email;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public ContactData setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
@@ -78,6 +79,7 @@ public class ContactData {
         return this;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public ContactData setLastName(String lastName) {
         this.lastName = lastName;
         return this;
@@ -123,6 +125,7 @@ public class ContactData {
         return this;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public ContactData setEmail(String email) {
         this.email = email;
         return this;

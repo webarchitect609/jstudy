@@ -1,9 +1,9 @@
 package ru.webarch.jstudy.addressbook.model;
 
 public class GroupData {
-    private final String name;
-    private final String header;
-    private final String footer;
+    private String name;
+    private String header;
+    private String footer;
 
     public GroupData(String name, String header, String footer) {
         this.name = name;

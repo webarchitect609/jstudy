@@ -2,24 +2,22 @@ package ru.webarch.jstudy.addressbook.appmanager;
 
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by gripinskiy on 16.04.16.
- */
 public class ApplicationManager {
 
-    private FirefoxDriver wd;
+    private FirefoxDriver wd = new FirefoxDriver();
 
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
+    @SuppressWarnings("FieldCanBeLocal")
     private SessionHelper sessionHelper;
     private ContactHelper contactHelper;
 
-    public static boolean isAlertPresent(FirefoxDriver wd) {
+    @SuppressWarnings("unused")
+    public boolean isAlertPresent() {
         try {
-            wd.switchTo().alert();
+            this.wd.switchTo().alert();
             return true;
         } catch (NoAlertPresentException e) {
             return false;
@@ -27,8 +25,6 @@ public class ApplicationManager {
     }
 
     public void init() {
-
-        wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         wd.get("http://addressbook.loc/index.php");
         contactHelper = new ContactHelper(wd);

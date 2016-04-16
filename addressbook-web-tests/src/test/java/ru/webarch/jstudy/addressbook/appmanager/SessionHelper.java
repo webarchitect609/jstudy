@@ -3,12 +3,11 @@ package ru.webarch.jstudy.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-/**
- * Created by gripinskiy on 16.04.16.
- */
+
+@SuppressWarnings("WeakerAccess")
 public class SessionHelper extends HelperBase{
 
-    public SessionHelper(FirefoxDriver wd) {
+    SessionHelper(FirefoxDriver wd) {
         super(wd);
     }
 

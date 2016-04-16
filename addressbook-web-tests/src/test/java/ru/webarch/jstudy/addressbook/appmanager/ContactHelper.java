@@ -4,12 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 
-/**
- * Created by gripinskiy on 16.04.16.
- */
 public class ContactHelper extends HelperBase {
 
-    public ContactHelper(FirefoxDriver wd) {
+    ContactHelper(FirefoxDriver wd) {
         super(wd);
     }
 
