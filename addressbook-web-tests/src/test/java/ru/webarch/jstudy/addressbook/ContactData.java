@@ -1,32 +1,23 @@
 package ru.webarch.jstudy.addressbook;
 
 public class ContactData {
-    private final String firstName;
-    private final String midName;
-    private final String lastName;
-    private final String nickname;
-    private final String title;
-    private final String company;
-    private final String address;
-    private final String phoneHome;
-    private final String phoneMobile;
-    private final String phoneWork;
-    private final String fax;
-    private final String email;
+    private String firstName = "";
+    private String midName = "";
+    private String lastName = "";
+    private String nickname = "";
+    private String title = "";
+    private String company = "";
+    private String address = "";
+    private String phoneHome = "";
+    private String phoneMobile = "";
+    private String phoneWork = "";
+    private String fax = "";
+    private String email = "";
 
-    public ContactData(String firstName, String midName, String lastName, String nickname, String title, String company, String address, String phoneHome, String phoneMobile, String phoneWork, String fax, String email) {
-        this.firstName = firstName;
-        this.midName = midName;
-        this.lastName = lastName;
-        this.nickname = nickname;
-        this.title = title;
-        this.company = company;
-        this.address = address;
-        this.phoneHome = phoneHome;
-        this.phoneMobile = phoneMobile;
-        this.phoneWork = phoneWork;
-        this.fax = fax;
-        this.email = email;
+    public ContactData(String lastName, String firstName, String email) {
+        this.setLastName(lastName);
+        this.setFirstName(firstName);
+        this.setEmail(email);
     }
 
     public String getFirstName() {
@@ -75,5 +66,65 @@ public class ContactData {
 
     public String getEmail() {
         return email;
+    }
+
+    public ContactData setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public ContactData setMidName(String midName) {
+        this.midName = midName;
+        return this;
+    }
+
+    public ContactData setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public ContactData setNickname(String nickname) {
+        this.nickname = nickname;
+        return this;
+    }
+
+    public ContactData setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public ContactData setCompany(String company) {
+        this.company = company;
+        return this;
+    }
+
+    public ContactData setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public ContactData setPhoneHome(String phoneHome) {
+        this.phoneHome = phoneHome;
+        return this;
+    }
+
+    public ContactData setPhoneMobile(String phoneMobile) {
+        this.phoneMobile = phoneMobile;
+        return this;
+    }
+
+    public ContactData setPhoneWork(String phoneWork) {
+        this.phoneWork = phoneWork;
+        return this;
+    }
+
+    public ContactData setFax(String fax) {
+        this.fax = fax;
+        return this;
+    }
+
+    public ContactData setEmail(String email) {
+        this.email = email;
+        return this;
     }
 }

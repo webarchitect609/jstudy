@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.*;
-import ru.webarch.jstudy.addressbook.ContactData;
 
 public class ContactCreationTest {
     FirefoxDriver wd;
@@ -34,7 +33,20 @@ public class ContactCreationTest {
     @Test
     public void testContactCreation() {
         initContactCreation();
-        fillContactForm(new ContactData("FirstName", "MidName", "LastName", "Nickname",  "Title", "Company", "Address", "phoneHome", "phoneMobile", "phoneWork", "fax", "email@example.com"));
+
+        ContactData contactData = new ContactData("LastName", "FirstName", "email@example.com");
+        contactData
+                .setMidName("MidName")
+                .setNickname("NickName")
+                .setTitle("Title")
+                .setCompany("Company")
+                .setAddress("Address")
+                .setPhoneHome("phoneHome")
+                .setPhoneMobile("phoneMobile")
+                .setPhoneWork("phoneWork")
+                .setFax("fax");
+
+        fillContactForm(contactData);
         submitContactCreation();
         returnToContactList();
     }
@@ -94,7 +106,7 @@ public class ContactCreationTest {
     public void tearDown() {
         wd.quit();
     }
-    
+
     public static boolean isAlertPresent(FirefoxDriver wd) {
         try {
             wd.switchTo().alert();
