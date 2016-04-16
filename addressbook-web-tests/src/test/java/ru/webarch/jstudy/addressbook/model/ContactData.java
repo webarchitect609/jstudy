@@ -1,4 +1,4 @@
-package ru.webarch.jstudy.addressbook;
+package ru.webarch.jstudy.addressbook.model;
 
 public class ContactData {
     private String firstName = "";

@@ -1,19 +1,13 @@
-package ru.webarch.jstudy.addressbook;
+package ru.webarch.jstudy.addressbook.tests;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.*;
+import ru.webarch.jstudy.addressbook.model.ContactData;
 
 public class ContactCreationTest extends TestBase {
 
     @Test
     public void testContactCreation() {
-        initContactCreation();
+        app.getContactHelper().initContactCreation();
 
         ContactData contactData = new ContactData("LastName", "FirstName", "email@example.com");
         contactData
@@ -27,9 +21,9 @@ public class ContactCreationTest extends TestBase {
                 .setPhoneWork("phoneWork")
                 .setFax("fax");
 
-        fillContactForm(contactData);
-        submitContactCreation();
-        returnToContactList();
+        app.getContactHelper().fillContactForm(contactData);
+        app.getContactHelper().submitContactCreation();
+        app.getContactHelper().returnToContactList();
     }
 
 }
