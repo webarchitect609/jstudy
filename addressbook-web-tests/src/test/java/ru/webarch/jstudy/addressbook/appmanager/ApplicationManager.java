@@ -1,6 +1,5 @@
 package ru.webarch.jstudy.addressbook.appmanager;
 
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.concurrent.TimeUnit;
 
@@ -13,16 +12,6 @@ public class ApplicationManager {
     @SuppressWarnings("FieldCanBeLocal")
     private SessionHelper sessionHelper;
     private ContactHelper contactHelper;
-
-    @SuppressWarnings("unused")
-    public boolean isAlertPresent() {
-        try {
-            this.wd.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
 
     public void init() {
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);

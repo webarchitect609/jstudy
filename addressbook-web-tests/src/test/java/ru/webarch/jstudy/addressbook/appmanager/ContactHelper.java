@@ -52,4 +52,10 @@ public class ContactHelper extends HelperBase {
     public void submitContactDeletion() {
         click(By.xpath("//div/div[4]/form[2]/div[2]/input"));
     }
+
+    public void confirmContactDeletion() {
+        if (isAlertPresent()) {
+            acceptAlert();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package ru.webarch.jstudy.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 abstract class HelperBase {
@@ -29,6 +30,15 @@ abstract class HelperBase {
     protected void setSelected(By locator) {
         if (!wd.findElement(locator).isSelected()) {
             click(locator);
+        }
+    }
+
+    public boolean isAlertPresent() {
+        try {
+            this.wd.switchTo().alert();
+            return true;
+        } catch (NoAlertPresentException e) {
+            return false;
         }
     }
 
