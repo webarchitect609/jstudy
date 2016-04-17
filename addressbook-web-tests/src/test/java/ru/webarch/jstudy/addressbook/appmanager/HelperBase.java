@@ -24,4 +24,15 @@ abstract class HelperBase {
         wd.findElement(locator).clear();
         wd.findElement(locator).sendKeys(text);
     }
+
+    @SuppressWarnings("WeakerAccess")
+    protected void setSelected(By locator) {
+        if (!wd.findElement(locator).isSelected()) {
+            click(locator);
+        }
+    }
+
+    public void acceptAlert() {
+        wd.switchTo().alert().accept();
+    }
 }
