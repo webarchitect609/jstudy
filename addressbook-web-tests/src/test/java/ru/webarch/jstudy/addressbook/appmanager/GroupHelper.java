@@ -1,12 +1,12 @@
 package ru.webarch.jstudy.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.WebDriver;
 import ru.webarch.jstudy.addressbook.model.GroupData;
 
 public class GroupHelper extends HelperBase{
 
-    GroupHelper(FirefoxDriver wd) {
+    GroupHelper(WebDriver wd) {
         super(wd);
     }
 

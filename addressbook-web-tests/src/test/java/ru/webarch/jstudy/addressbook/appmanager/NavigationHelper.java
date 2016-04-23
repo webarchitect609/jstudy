@@ -1,11 +1,11 @@
 package ru.webarch.jstudy.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.WebDriver;
 
 public class NavigationHelper extends HelperBase {
 
-    NavigationHelper(FirefoxDriver wd) {
+    NavigationHelper(WebDriver wd) {
         super(wd);
     }
 
