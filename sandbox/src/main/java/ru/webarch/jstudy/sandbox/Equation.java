@@ -17,13 +17,22 @@ public class Equation {
 
         double d =  Math.pow(b, 2) - 4 * a * c;
 
-        if ( d > 0) {
-            rootCount = 2;
-        } else if ( d == 0 ) {
+        if (a != 0) {
+            if ( d > 0) {
+                rootCount = 2;
+            } else if ( d == 0 ) {
+                rootCount = 1;
+            } else {
+                rootCount = 0;
+            }
+        } else if (b != 0) {
             rootCount = 1;
-        } else {
+        } else if (c != 0) {
             rootCount = 0;
+        } else {
+            rootCount = -1;
         }
+
 
     }
 
