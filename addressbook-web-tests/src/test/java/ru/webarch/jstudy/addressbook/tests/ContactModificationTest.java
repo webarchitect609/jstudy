@@ -14,7 +14,7 @@ public class ContactModificationTest extends TestBase {
         editedContact
                 .setAddress("edited address")
                 .setPhoneMobile("edited mobile phone");
-        app.getContactHelper().fillContactForm(editedContact);
+        app.getContactHelper().fillContactForm(editedContact, false);
         app.getContactHelper().submitContactModification();
         app.getContactHelper().returnToContactList();
     }

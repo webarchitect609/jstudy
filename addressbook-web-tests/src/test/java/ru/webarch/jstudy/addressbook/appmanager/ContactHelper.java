@@ -2,6 +2,7 @@ package ru.webarch.jstudy.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 
 public class ContactHelper extends HelperBase {
@@ -18,7 +19,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void fillContactForm(ContactData contactData) {
+    public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("middlename"), contactData.getMidName());
         type(By.name("lastname"), contactData.getLastName());
@@ -31,6 +32,12 @@ public class ContactHelper extends HelperBase {
         type(By.name("work"), contactData.getPhoneWork());
         type(By.name("fax"), contactData.getFax());
         type(By.name("email"), contactData.getEmail());
+
+        if (creation) {
+            selectOption(By.name("new_group"), contactData.getGroup());
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
     }
 
     public void initContactCreation() {

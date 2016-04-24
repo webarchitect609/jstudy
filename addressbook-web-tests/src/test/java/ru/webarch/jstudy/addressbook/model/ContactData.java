@@ -1,18 +1,19 @@
 package ru.webarch.jstudy.addressbook.model;
 
 public class ContactData {
-    private String firstName = "";
-    private String midName = "";
-    private String lastName = "";
-    private String nickname = "";
-    private String title = "";
-    private String company = "";
-    private String address = "";
-    private String phoneHome = "";
-    private String phoneMobile = "";
-    private String phoneWork = "";
-    private String fax = "";
-    private String email = "";
+    private String firstName = null;
+    private String midName = null;
+    private String lastName = null;
+    private String nickname = null;
+    private String title = null;
+    private String company = null;
+    private String address = null;
+    private String phoneHome = null;
+    private String phoneMobile = null;
+    private String phoneWork = null;
+    private String fax = null;
+    private String email = null;
+    private String group = null;
 
     public ContactData(String lastName, String firstName, String email) {
         this.setLastName(lastName);
@@ -128,6 +129,15 @@ public class ContactData {
     @SuppressWarnings("WeakerAccess")
     public ContactData setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public ContactData setGroup(String group) {
+        this.group = group;
         return this;
     }
 }

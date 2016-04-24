@@ -19,9 +19,10 @@ public class ContactCreationTest extends TestBase {
                 .setPhoneHome("phoneHome")
                 .setPhoneMobile("phoneMobile")
                 .setPhoneWork("phoneWork")
-                .setFax("fax");
+                .setFax("fax")
+                .setGroup("groupName");
 
-        app.getContactHelper().fillContactForm(contactData);
+        app.getContactHelper().fillContactForm(contactData, true);
         app.getContactHelper().submitContactCreation();
         app.getContactHelper().returnToContactList();
     }
