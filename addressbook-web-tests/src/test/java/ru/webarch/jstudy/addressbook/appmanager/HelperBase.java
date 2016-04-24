@@ -21,8 +21,9 @@ abstract class HelperBase {
 
     @SuppressWarnings("WeakerAccess")
     protected void click(By locator) {
-        WebElement element = getElementWhenClickable(locator, waitElementInSeconds);
-        element.click();
+//        WebElement element = getElementWhenClickable(locator, waitElementInSeconds);
+//        element.click();
+        wd.findElement(locator).click();
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -34,8 +35,11 @@ abstract class HelperBase {
 
     @SuppressWarnings("WeakerAccess")
     protected void setSelected(By locator) {
-        WebElement element = getElementWhenClickable(locator, waitElementInSeconds);
-        if (!element.isSelected()) {
+//        WebElement element = getElementWhenClickable(locator, waitElementInSeconds);
+//        if (!element.isSelected()) {
+//            click(locator);
+//        }
+        if (!wd.findElement(locator).isSelected()) {
             click(locator);
         }
     }
@@ -59,12 +63,12 @@ abstract class HelperBase {
          * UnhandledAlertException: unexpected alert open
          */
         //TODO Не работает! :(
-        (new WebDriverWait(wd, waitElementInSeconds))
-                .until(
-                        ExpectedConditions.not(
-                                ExpectedConditions.alertIsPresent()
-                        )
-                );
+//        (new WebDriverWait(wd, waitElementInSeconds))
+//                .until(
+//                        ExpectedConditions.not(
+//                                ExpectedConditions.alertIsPresent()
+//                        )
+//                );
     }
 
     /**
