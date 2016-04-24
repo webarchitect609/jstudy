@@ -23,18 +23,14 @@ public class ContactHelper extends HelperBase {
 
     public void fillContactForm(ContactData contactData, boolean creation) {
 
-        //Создание группы, если она задана, но не существует
-        if (contactData.getGroup() != null && !isOptionExistsInSelect(By.name("new_group"), contactData.getGroup())) {
+        //Если контакт создаётся и задана группа, а её в выпадашке нет
+        if (creation && contactData.getGroup() != null && !isOptionExistsInSelect(By.name("new_group"), contactData.getGroup())) {
+            //Создать нужную группу
             app.getNavigationHelper().gotoGroupPage();
             app.getGroupHelper().createGroup(new GroupData(contactData.getGroup(), null, null));
+            //И вернуться к созданию контакта
             app.getNavigationHelper().gotoContactPage();
-            if (creation) {
-                //Возвращаемся к созданию контакта
-                initContactCreation();
-            } else {
-                //Возвращаемся к редактированию контакта
-                editContact();
-            }
+            initContactCreation();
         }
 
         type(By.name("firstname"), contactData.getFirstName());
@@ -58,11 +54,11 @@ public class ContactHelper extends HelperBase {
     }
 
     public void initContactCreation() {
-        click(By.linkText("ADD_NEW"));
+        click(By.xpath("//a[@href=\"edit.php\"]"));
     }
 
     public void editContact() {
-        click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+        click(By.xpath("//*[@id='maintable']//tr[@name=\"entry\"]//td[8]/a/img"));
     }
 
     public void submitContactModification() {

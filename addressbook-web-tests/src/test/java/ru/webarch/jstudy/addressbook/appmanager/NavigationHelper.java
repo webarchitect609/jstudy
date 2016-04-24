@@ -17,13 +17,13 @@ public class NavigationHelper extends HelperBase {
                 ) {
             return;
         }
-        click(By.linkText("GROUPS"));
+        click(By.xpath("//a[@href=\"group.php\"]"));
     }
 
     public void gotoContactPage() {
         if (isElementPresent(By.id("maintable"))) {
             return;
         }
-        click(By.linkText("HOME"));
+        click(By.xpath("//*[@id='nav']/ul/li[1]/a[@href=\"./\"]"));
     }
 }

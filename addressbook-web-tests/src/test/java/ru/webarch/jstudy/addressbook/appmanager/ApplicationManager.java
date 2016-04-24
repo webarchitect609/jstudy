@@ -30,14 +30,7 @@ public class ApplicationManager {
             wd = new FirefoxDriver();
         } else if (browserType.equals(BrowserType.CHROME)) {
             wd = new ChromeDriver();
-        } else if (browserType.equals(BrowserType.IE)) {
-            wd = new InternetExplorerDriver();
         }
-//        } else if (browserType.equals(BrowserType.OPERA_BLINK)) {
-//            OperaOptions operaOptions = new OperaOptions();
-//            operaOptions.setBinary("/usr/bin/opera");
-//            wd = new OperaDriver(operaOptions);
-//        }
 
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         wd.get("http://addressbook.loc/index.php");
