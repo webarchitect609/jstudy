@@ -4,8 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.BrowserType;
 
 import java.util.concurrent.TimeUnit;
@@ -43,10 +41,10 @@ public class ApplicationManager {
 
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         wd.get("http://addressbook.loc/index.php");
-        contactHelper = new ContactHelper(wd);
-        groupHelper = new GroupHelper(wd);
-        navigationHelper = new NavigationHelper(wd);
-        sessionHelper = new SessionHelper(wd);
+        contactHelper = new ContactHelper(wd, this);
+        groupHelper = new GroupHelper(wd, this);
+        navigationHelper = new NavigationHelper(wd, this);
+        sessionHelper = new SessionHelper(wd, this);
         sessionHelper.login("admin", "secret");
     }
 

@@ -7,8 +7,7 @@ public class ContactCreationTest extends TestBase {
 
     @Test
     public void testContactCreation() {
-        app.getContactHelper().initContactCreation();
-
+        app.getNavigationHelper().gotoContactPage();
         ContactData contactData = new ContactData("LastName", "FirstName", "email@example.com");
         contactData
                 .setMidName("MidName")
@@ -22,9 +21,7 @@ public class ContactCreationTest extends TestBase {
                 .setFax("fax")
                 .setGroup("groupName");
 
-        app.getContactHelper().fillContactForm(contactData, true);
-        app.getContactHelper().submitContactCreation();
-        app.getContactHelper().returnToContactList();
+        app.getContactHelper().createContact(contactData);
     }
 
 }

@@ -1,14 +1,16 @@
 package ru.webarch.jstudy.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import ru.webarch.jstudy.addressbook.model.ContactData;
+import ru.webarch.jstudy.addressbook.model.GroupData;
 
 public class ContactHelper extends HelperBase {
 
-    ContactHelper(WebDriver wd) {
-        super(wd);
+    ContactHelper(WebDriver wd, ApplicationManager app) {
+        super(wd, app);
     }
 
     public void returnToContactList() {
@@ -20,6 +22,21 @@ public class ContactHelper extends HelperBase {
     }
 
     public void fillContactForm(ContactData contactData, boolean creation) {
+
+        //Создание группы, если она задана, но не существует
+        if (contactData.getGroup() != null && !isOptionExistsInSelect(By.name("new_group"), contactData.getGroup())) {
+            app.getNavigationHelper().gotoGroupPage();
+            app.getGroupHelper().createGroup(new GroupData(contactData.getGroup(), null, null));
+            app.getNavigationHelper().gotoContactPage();
+            if (creation) {
+                //Возвращаемся к созданию контакта
+                initContactCreation();
+            } else {
+                //Возвращаемся к редактированию контакта
+                editContact();
+            }
+        }
+
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("middlename"), contactData.getMidName());
         type(By.name("lastname"), contactData.getLastName());
@@ -64,5 +81,16 @@ public class ContactHelper extends HelperBase {
         if (isAlertPresent()) {
             acceptAlert();
         }
+    }
+
+    public void createContact(ContactData contactData) {
+        initContactCreation();
+        fillContactForm(contactData, true);
+        submitContactCreation();
+        returnToContactList();
+    }
+
+    public boolean isContactsPresent() {
+        return isElementPresent(By.name("selected[]"));
     }
 }

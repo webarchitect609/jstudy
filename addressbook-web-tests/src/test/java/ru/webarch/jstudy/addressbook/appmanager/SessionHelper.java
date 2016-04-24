@@ -7,8 +7,8 @@ import org.openqa.selenium.WebDriver;
 @SuppressWarnings("WeakerAccess")
 public class SessionHelper extends HelperBase{
 
-    SessionHelper(WebDriver wd) {
-        super(wd);
+    SessionHelper(WebDriver wd, ApplicationManager app) {
+        super(wd, app);
     }
 
     public void login(String username, String password) {

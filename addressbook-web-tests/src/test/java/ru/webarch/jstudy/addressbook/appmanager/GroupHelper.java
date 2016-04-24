@@ -1,14 +1,13 @@
 package ru.webarch.jstudy.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import ru.webarch.jstudy.addressbook.model.GroupData;
 
 public class GroupHelper extends HelperBase{
 
-    GroupHelper(WebDriver wd) {
-        super(wd);
+    GroupHelper(WebDriver wd, ApplicationManager app) {
+        super(wd, app);
     }
 
     public void returnToGroupPage() {
@@ -53,7 +52,7 @@ public class GroupHelper extends HelperBase{
     }
 
     public boolean isGroupsPresent() {
-        return isElementPresent(By.id("select[]"));
+        return isElementPresent(By.name("selected[]"));
     }
-    
+
 }

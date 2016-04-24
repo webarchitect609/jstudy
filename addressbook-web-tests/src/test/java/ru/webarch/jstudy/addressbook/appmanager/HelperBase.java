@@ -10,11 +10,15 @@ abstract class HelperBase {
     @SuppressWarnings("WeakerAccess")
     protected WebDriver wd;
 
+    @SuppressWarnings("WeakerAccess")
+    protected ApplicationManager app;
+
     private int waitElementInSeconds = 10;
 
     @SuppressWarnings("WeakerAccess")
-    protected HelperBase(WebDriver wd) {
+    protected HelperBase(WebDriver wd, ApplicationManager app) {
         this.wd = wd;
+        this.app = app;
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -109,6 +113,15 @@ abstract class HelperBase {
     protected void selectOption(By locator, String visibleText) {
         if (visibleText != null) {
             new Select(wd.findElement(locator)).selectByVisibleText(visibleText);
+        }
+    }
+
+    protected boolean isOptionExistsInSelect(By selectLocator, String optionVisibleText) {
+        try {
+            selectOption(selectLocator, optionVisibleText);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
         }
     }
 }
