@@ -7,7 +7,7 @@ import ru.webarch.jstudy.addressbook.appmanager.ApplicationManager;
 
 abstract public class TestBase {
 
-    ApplicationManager app = new ApplicationManager(BrowserType.OPERA_BLINK);
+    ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
 
     @BeforeMethod
     public void setUp() throws Exception {
