@@ -27,7 +27,7 @@ public class Collection {
         for (String lang : listOfLangs) {
             System.out.println("Я хочу выучить " + lang);
         }
-        
+
     }
 
 }
