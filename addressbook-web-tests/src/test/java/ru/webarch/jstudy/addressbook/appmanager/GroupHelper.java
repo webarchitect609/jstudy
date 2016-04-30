@@ -2,6 +2,7 @@ package ru.webarch.jstudy.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import ru.webarch.jstudy.addressbook.model.GroupData;
 
 public class GroupHelper extends HelperBase{
@@ -32,8 +33,11 @@ public class GroupHelper extends HelperBase{
         click(By.name("delete"));
     }
 
-    public void selectGroups() {
-        setSelected(By.name("selected[]"));
+    public void selectGroups(int index) {
+        WebElement group = wd.findElements(By.name("selected[]")).get(index);
+        if (!group.isSelected()) {
+            group.click();
+        }
     }
 
     public void initGroupModification() {

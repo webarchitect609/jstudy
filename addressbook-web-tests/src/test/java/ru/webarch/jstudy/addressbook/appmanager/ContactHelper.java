@@ -3,6 +3,7 @@ package ru.webarch.jstudy.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 import ru.webarch.jstudy.addressbook.model.GroupData;
@@ -57,16 +58,19 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//a[@href=\"edit.php\"]"));
     }
 
-    public void editContact() {
-        click(By.xpath("//*[@id='maintable']//tr[@name=\"entry\"]//td[8]/a/img"));
+    public void editContact(int index) {
+        wd.findElements(By.xpath("//*[@id='maintable']//tr[@name=\"entry\"]//td[8]/a/img")).get(index).click();
     }
 
     public void submitContactModification() {
         click(By.name("update"));
     }
 
-    public void selectContacts() {
-        setSelected(By.name("selected[]"));
+    public void selectContacts(int index) {
+        WebElement contact = wd.findElements(By.name("selected[]")).get(index);
+        if (!contact.isSelected()) {
+            contact.click();
+        }
     }
 
     public void submitContactDeletion() {

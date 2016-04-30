@@ -27,7 +27,7 @@ public class ContactModificationTest extends TestBase {
             app.getContactHelper().createContact(contactData);
             beforeContactCount++;
         }
-        app.getContactHelper().editContact();
+        app.getContactHelper().editContact(beforeContactCount - 1);
         ContactData editedContact = new ContactData("edited lastname", "edited firstname", "edited@email.com");
         editedContact
                 .setAddress("edited address")
