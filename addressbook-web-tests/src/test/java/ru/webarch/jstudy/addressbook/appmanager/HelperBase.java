@@ -78,13 +78,8 @@ abstract class HelperBase {
          * Иначе вылазиет ошибка типа
          * UnhandledAlertException: unexpected alert open
          */
-        //TODO Не работает! :(
-//        (new WebDriverWait(wd, waitElementInSeconds))
-//                .until(
-//                        ExpectedConditions.not(
-//                                ExpectedConditions.alertIsPresent()
-//                        )
-//                );
+        //TODO Внедрить для оперы эту заплатку
+        //Thread.sleep(1000)
     }
 
     /**
