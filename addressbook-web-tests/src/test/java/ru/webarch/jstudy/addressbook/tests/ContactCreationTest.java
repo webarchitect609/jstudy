@@ -4,12 +4,14 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 
+import java.util.List;
+
 public class ContactCreationTest extends TestBase {
 
     @Test
     public void testContactCreation() {
         app.getNavigationHelper().gotoContactPage();
-        int beforeContactCount = app.getContactHelper().getContactCount();
+        List<ContactData> beforeContacts = app.getContactHelper().getContactList();
         ContactData contactData = new ContactData("LastName", "FirstName", "email@example.com");
         contactData
                 .setMidName("MidName")
@@ -25,8 +27,8 @@ public class ContactCreationTest extends TestBase {
 
         app.getContactHelper().createContact(contactData);
         app.getNavigationHelper().gotoContactPage();
-        int afterContactCount = app.getContactHelper().getContactCount();
-        Assert.assertEquals(afterContactCount, beforeContactCount + 1);
+        List<ContactData> afterContacts = app.getContactHelper().getContactList();
+        Assert.assertEquals(afterContacts.size(), beforeContacts.size() + 1);
     }
 
 }

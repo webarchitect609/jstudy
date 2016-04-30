@@ -5,12 +5,13 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 
+import java.util.List;
+
 public class ContactModificationTest extends TestBase {
 
     @Test
     public void testContactModification() {
         app.getNavigationHelper().gotoContactPage();
-        int beforeContactCount = app.getContactHelper().getContactCount();
         if (!app.getContactHelper().isContactsPresent()) {
             ContactData contactData = new ContactData("LastName", "FirstName", "email@example.com");
             contactData
@@ -25,9 +26,9 @@ public class ContactModificationTest extends TestBase {
                     .setFax("fax")
                     .setGroup("groupName");
             app.getContactHelper().createContact(contactData);
-            beforeContactCount++;
         }
-        app.getContactHelper().editContact(beforeContactCount - 1);
+        List<ContactData> beforeContacts = app.getContactHelper().getContactList();
+        app.getContactHelper().editContact(beforeContacts.size() - 1);
         ContactData editedContact = new ContactData("edited lastname", "edited firstname", "edited@email.com");
         editedContact
                 .setAddress("edited address")
@@ -36,8 +37,8 @@ public class ContactModificationTest extends TestBase {
         app.getContactHelper().fillContactForm(editedContact, false);
         app.getContactHelper().submitContactModification();
         app.getContactHelper().returnToContactList();
-        int afterContactCount = app.getContactHelper().getContactCount();
-        Assert.assertEquals(afterContactCount, beforeContactCount);
+        List<ContactData> afterContacts = app.getContactHelper().getContactList();
+        Assert.assertEquals(afterContacts.size(), beforeContacts.size());
     }
 
 }

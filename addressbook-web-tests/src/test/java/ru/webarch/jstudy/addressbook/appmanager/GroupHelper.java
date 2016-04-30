@@ -5,6 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.webarch.jstudy.addressbook.model.GroupData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GroupHelper extends HelperBase{
 
     GroupHelper(WebDriver wd, ApplicationManager app) {
@@ -61,5 +64,16 @@ public class GroupHelper extends HelperBase{
 
     public int getGroupCount() {
         return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public List<GroupData> getGroupList() {
+        List<GroupData> groups = new ArrayList<GroupData>();
+        List<WebElement> groupElements = wd.findElements(By.cssSelector("span.group"));
+        for (WebElement groupElement : groupElements) {
+            String name = groupElement.getText();
+            GroupData group = new GroupData(name, null, null);
+            groups.add(group);
+        }
+        return groups;
     }
 }
