@@ -16,7 +16,17 @@ public class ContactData {
     private String fax = null;
     private String email = null;
     private String group = null;
+    private String id;
+
+    public ContactData(String id, String lastName, String firstName, String email) {
+        this.id = id;
+        this.setLastName(lastName);
+        this.setFirstName(firstName);
+        this.setEmail(email);
+    }
+
     public ContactData(String lastName, String firstName, String email) {
+        this.id = null;
         this.setLastName(lastName);
         this.setFirstName(firstName);
         this.setEmail(email);
@@ -142,16 +152,6 @@ public class ContactData {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "ContactData{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", midName='" + midName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -163,7 +163,8 @@ public class ContactData {
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
         if (midName != null ? !midName.equals(that.midName) : that.midName != null) return false;
         if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        return email != null ? email.equals(that.email) : that.email == null;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        return id != null ? id.equals(that.id) : that.id == null;
 
     }
 
@@ -173,6 +174,22 @@ public class ContactData {
         result = 31 * result + (midName != null ? midName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (id != null ? id.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", midName='" + midName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    public String getId() {
+        return id;
     }
 }
