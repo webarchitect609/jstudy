@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactDeletionTest extends TestBase {
@@ -29,12 +30,16 @@ public class ContactDeletionTest extends TestBase {
         }
         List<ContactData> beforeContacts = app.getContactHelper().getContactList();
         int contactIndex = beforeContacts.size() - 1;
-        beforeContacts.remove(contactIndex);
         app.getContactHelper().selectContacts(contactIndex);
         app.getContactHelper().submitContactDeletion();
         app.getContactHelper().confirmContactDeletion();
         app.getNavigationHelper().gotoContactPage();
+        beforeContacts.remove(contactIndex);
         List<ContactData> afterContacts = app.getContactHelper().getContactList();
+
+        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
+        beforeContacts.sort(byId);
+        afterContacts.sort(byId);
 
         Assert.assertEquals(afterContacts.size(), beforeContacts.size());
         Assert.assertEquals(afterContacts, beforeContacts);

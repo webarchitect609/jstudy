@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.GroupData;
 
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 
 public class GroupCreationTest extends TestBase {
@@ -14,17 +14,20 @@ public class GroupCreationTest extends TestBase {
 
         app.getNavigationHelper().gotoGroupPage();
         List<GroupData> beforeGroups = app.getGroupHelper().getGroupList();
-
-        GroupData groupData = new GroupData("groupName", null, null);
+        GroupData groupData = new GroupData(Integer.MAX_VALUE, "groupName", null, null);
         app.getGroupHelper().createGroup(groupData);
-
+        beforeGroups.add(groupData);
         List<GroupData> afterGroups = app.getGroupHelper().getGroupList();
 
-        groupData.setId(afterGroups.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
-        beforeGroups.add(groupData);
+        Comparator<GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+        beforeGroups.sort(byId);
+        afterGroups.sort(byId);
+
+        int last = afterGroups.size()-1;
+        beforeGroups.get(last).setId(afterGroups.get(last).getId());
 
         Assert.assertEquals(afterGroups.size(), beforeGroups.size());
-        Assert.assertEquals(new HashSet<GroupData>(afterGroups), new HashSet<GroupData>(beforeGroups));
+        Assert.assertEquals(afterGroups, beforeGroups);
 
     }
 

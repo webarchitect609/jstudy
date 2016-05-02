@@ -16,9 +16,10 @@ public class ContactData {
     private String fax = null;
     private String email = null;
     private String group = null;
-    private String id;
 
-    public ContactData(String id, String lastName, String firstName, String email) {
+    private int id;
+
+    public ContactData(int id, String lastName, String firstName, String email) {
         this.id = id;
         this.setLastName(lastName);
         this.setFirstName(firstName);
@@ -26,7 +27,7 @@ public class ContactData {
     }
 
     public ContactData(String lastName, String firstName, String email) {
-        this.id = null;
+        this.id = 0;
         this.setLastName(lastName);
         this.setFirstName(firstName);
         this.setEmail(email);
@@ -143,6 +144,10 @@ public class ContactData {
         return this;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getGroup() {
         return group;
     }
@@ -153,6 +158,21 @@ public class ContactData {
     }
 
 
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -160,36 +180,21 @@ public class ContactData {
 
         ContactData that = (ContactData) o;
 
+        if (id != that.id) return false;
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (midName != null ? !midName.equals(that.midName) : that.midName != null) return false;
         if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        return id != null ? id.equals(that.id) : that.id == null;
+        if (address != null ? !address.equals(that.address) : that.address != null) return false;
+        return email != null ? email.equals(that.email) : that.email == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = firstName != null ? firstName.hashCode() : 0;
-        result = 31 * result + (midName != null ? midName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + id;
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "ContactData{" +
-                "id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", midName='" + midName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
-    public String getId() {
-        return id;
     }
 }

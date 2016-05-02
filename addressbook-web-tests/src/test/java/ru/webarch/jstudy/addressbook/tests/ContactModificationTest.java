@@ -5,7 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactModificationTest extends TestBase {
@@ -41,15 +41,19 @@ public class ContactModificationTest extends TestBase {
                 .setAddress("edited address")
                 .setPhoneMobile("edited mobile phone")
                 .setGroup("Modified group name");
-        beforeContacts.remove(contactIndex);
-        beforeContacts.add(editedContact);
         app.getContactHelper().fillContactForm(editedContact, false);
         app.getContactHelper().submitContactModification();
         app.getContactHelper().returnToContactList();
+        beforeContacts.remove(contactIndex);
+        beforeContacts.add(editedContact);
         List<ContactData> afterContacts = app.getContactHelper().getContactList();
 
+        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
+        beforeContacts.sort(byId);
+        afterContacts.sort(byId);
+
         Assert.assertEquals(afterContacts.size(), beforeContacts.size());
-        Assert.assertEquals(new HashSet<Object>(beforeContacts), new HashSet<Object>(afterContacts));
+        Assert.assertEquals(beforeContacts, afterContacts);
     }
 
 }
