@@ -27,14 +27,13 @@ public class ContactHelper extends HelperBase {
 
     public void fillContactForm(ContactData contactData, boolean creation) {
 
-        //Если контакт создаётся и задана группа, а её в выпадашке нет
-        if (creation && contactData.getGroup() != null && !isOptionExistsInSelect(By.name("new_group"), contactData.getGroup())) {
-            //Создать нужную группу
-            app.getNavigationHelper().gotoGroupPage();
-            app.getGroupHelper().createGroup(new GroupData(contactData.getGroup(), null, null));
-            //И вернуться к созданию контакта
-            app.getNavigationHelper().gotoContactPage();
-            initContactCreation();
+        //Если контакт создаётся и задана группа
+        if (creation && contactData.getGroup() != null) {
+            //А её в выпадашке нет
+            Assert.assertTrue(
+                    isOptionExistsInSelect(By.name("new_group"), contactData.getGroup()),
+                    "проверка наличия группы `" + contactData.getGroup() + "` в выпадающем списке"
+            );
         }
 
         type(By.name("firstname"), contactData.getFirstName());
@@ -86,6 +85,7 @@ public class ContactHelper extends HelperBase {
         }
     }
 
+    //TODO Перенести в TestBase и добавить проверку, когда контакт создаётся, а указанной группы нет в выпадающем списке в форме создания контакта
     public void createContact(ContactData contactData) {
         initContactCreation();
         fillContactForm(contactData, true);
