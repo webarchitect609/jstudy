@@ -1,12 +1,10 @@
 package ru.webarch.jstudy.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.webarch.jstudy.addressbook.model.ContactData;
-import ru.webarch.jstudy.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +15,17 @@ public class ContactHelper extends HelperBase {
         super(wd, app);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void returnToContactList() {
         click(By.linkText("home page"));
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void submitContactCreation() {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void fillContactForm(ContactData contactData, boolean creation) {
 
         //Если контакт создаётся и задана группа
@@ -56,18 +57,22 @@ public class ContactHelper extends HelperBase {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void initContactCreation() {
         click(By.xpath("//a[@href=\"edit.php\"]"));
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void editContact(int index) {
         wd.findElements(By.xpath("//*[@id='maintable']//tr[@name=\"entry\"]//td[8]/a/img")).get(index).click();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void submitContactModification() {
         click(By.name("update"));
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void selectContacts(int index) {
         WebElement contact = wd.findElements(By.name("selected[]")).get(index);
         if (!contact.isSelected()) {
@@ -75,33 +80,40 @@ public class ContactHelper extends HelperBase {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void submitContactDeletion() {
         click(By.xpath("//div/div[4]/form[2]/div[2]/input"));
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void confirmContactDeletion() {
         if (isAlertPresent()) {
             acceptAlert();
         }
     }
 
-    //TODO Перенести в TestBase и добавить проверку, когда контакт создаётся, а указанной группы нет в выпадающем списке в форме создания контакта
-    public void createContact(ContactData contactData) {
+    public void create(ContactData contactData) {
         initContactCreation();
         fillContactForm(contactData, true);
         submitContactCreation();
         returnToContactList();
     }
 
-    public boolean isContactsPresent() {
-        return isElementPresent(By.name("selected[]"));
+    public void modify(int contactIndex, ContactData editedContact) {
+        editContact(contactIndex);
+        fillContactForm(editedContact, false);
+        submitContactModification();
+        returnToContactList();
     }
 
-    public int getContactCount() {
-        return wd.findElements(By.name("selected[]")).size();
+    public void delete(int contactIndex) {
+        selectContacts(contactIndex);
+        submitContactDeletion();
+        confirmContactDeletion();
+        app.goTo().contactPage();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> contactElements = wd.findElements(By.cssSelector("tr[name=\"entry\"]"));
         for (WebElement contactElement : contactElements) {
@@ -110,9 +122,15 @@ public class ContactHelper extends HelperBase {
             String firstName = contactElement.findElement(By.xpath(".//td[3]")).getText();
             String address = contactElement.findElement(By.xpath(".//td[4]")).getText();
             String email = contactElement.findElement(By.xpath(".//td[5]/a[1]")).getText();
-            ContactData contact = new ContactData(id, lastName, firstName, email);
-            contact.setAddress(address);
-            contacts.add(contact);
+
+            contacts.add(
+                    new ContactData()
+                            .withId(id)
+                            .withLastName(lastName)
+                            .withFirstName(firstName)
+                            .withAddress(address)
+                            .withEmail(email)
+            );
         }
         return contacts;
     }

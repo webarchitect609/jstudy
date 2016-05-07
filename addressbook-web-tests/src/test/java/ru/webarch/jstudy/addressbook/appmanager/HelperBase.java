@@ -13,6 +13,7 @@ abstract class HelperBase {
     @SuppressWarnings("WeakerAccess")
     protected ApplicationManager app;
 
+    @SuppressWarnings("unused")
     private int waitElementInSeconds = 10;
 
     @SuppressWarnings("WeakerAccess")
@@ -40,7 +41,7 @@ abstract class HelperBase {
         }
     }
 
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "unused"})
     protected void setSelected(By locator) {
 //        WebElement element = getElementWhenClickable(locator, waitElementInSeconds);
 //        if (!element.isSelected()) {
@@ -51,6 +52,7 @@ abstract class HelperBase {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     protected boolean isElementPresent(By locator) {
         try {
             wd.findElement(locator);
@@ -60,6 +62,7 @@ abstract class HelperBase {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public boolean isAlertPresent() {
         try {
             this.wd.switchTo().alert();
@@ -69,6 +72,7 @@ abstract class HelperBase {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void acceptAlert() {
         wd.switchTo().alert().accept();
 
@@ -93,6 +97,7 @@ abstract class HelperBase {
      * @param timeOutInSeconds Таймаут ожидания в секундах
      * @return Ожидаемый элемент
      */
+    @SuppressWarnings("unused")
     protected WebElement getElementWhenClickable(By locator, int timeOutInSeconds) {
         return (new WebDriverWait(wd, timeOutInSeconds))
                 .until(
@@ -105,12 +110,14 @@ abstract class HelperBase {
      * @param locator Локатор
      * @param visibleText видимый текст
      */
+    @SuppressWarnings("WeakerAccess")
     protected void selectOption(By locator, String visibleText) {
         if (visibleText != null) {
             new Select(wd.findElement(locator)).selectByVisibleText(visibleText);
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     protected boolean isOptionExistsInSelect(By selectLocator, String optionVisibleText) {
         try {
             selectOption(selectLocator, optionVisibleText);

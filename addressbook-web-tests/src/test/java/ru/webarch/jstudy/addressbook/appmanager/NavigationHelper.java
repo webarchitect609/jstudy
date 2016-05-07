@@ -9,7 +9,7 @@ public class NavigationHelper extends HelperBase {
         super(wd, app);
     }
 
-    public void gotoGroupPage() {
+    public void groupPage() {
 
         if (isElementPresent(By.tagName("h1"))
                 && wd.findElement(By.tagName("h1")).getText().equals("GROUPS")
@@ -20,7 +20,7 @@ public class NavigationHelper extends HelperBase {
         click(By.xpath("//a[@href=\"group.php\"]"));
     }
 
-    public void gotoContactPage() {
+    public void contactPage() {
         if (isElementPresent(By.id("maintable"))) {
             return;
         }

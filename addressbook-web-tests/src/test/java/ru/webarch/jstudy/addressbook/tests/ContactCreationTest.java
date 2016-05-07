@@ -12,32 +12,34 @@ public class ContactCreationTest extends TestBase {
     @Test
     public void testContactCreation() {
 
-        app.getNavigationHelper().gotoContactPage();
-        List<ContactData> beforeContacts = app.getContactHelper().getContactList();
-        ContactData contactData = new ContactData(Integer.MAX_VALUE, "LastName", "FirstName", "email@example.com");
-        contactData
-                .setMidName("MidName")
-                .setNickname("NickName")
-                .setTitle("Title")
-                .setCompany("Company")
-                .setAddress("Address")
-                .setPhoneHome("phoneHome")
-                .setPhoneMobile("phoneMobile")
-                .setPhoneWork("phoneWork")
-                .setFax("fax")
-                .setGroup("groupName");
+        app.goTo().contactPage();
+        List<ContactData> beforeContacts = app.contact().list();
+        ContactData contactData = new ContactData()
+                .withLastName("LastName")
+                .withFirstName("FirstName")
+                .withEmail("email@example.com")
+                .withMidName("MidName")
+                .withNickname("NickName")
+                .withTitle("Title")
+                .withCompany("Company")
+                .withAddress("Address")
+                .withHomePhone("phoneHome")
+                .withMobilePhone("phoneMobile")
+                .withWorkPhone("phoneWork")
+                .withFax("fax")
+                .withId(Integer.MAX_VALUE);
 
-        app.getContactHelper().createContact(contactData);
-        app.getNavigationHelper().gotoContactPage();
+        app.contact().create(contactData);
+        app.goTo().contactPage();
         beforeContacts.add(contactData);
-        List<ContactData> afterContacts = app.getContactHelper().getContactList();
+        List<ContactData> afterContacts = app.contact().list();
 
         Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
         beforeContacts.sort(byId);
         afterContacts.sort(byId);
 
         int last = afterContacts.size() - 1;
-        beforeContacts.get(last).setId(afterContacts.get(last).getId());
+        beforeContacts.get(last).withId(afterContacts.get(last).getId());
 
         Assert.assertEquals(afterContacts.size(), beforeContacts.size());
         Assert.assertEquals(afterContacts, beforeContacts);

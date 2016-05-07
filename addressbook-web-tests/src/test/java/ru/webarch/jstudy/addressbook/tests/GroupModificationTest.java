@@ -1,38 +1,37 @@
 package ru.webarch.jstudy.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.GroupData;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class GroupModificationTest extends TestBase {
 
+    @BeforeMethod
+    public void setup() {
+        app.goTo().groupPage();
+        if (app.group().list().size() == 0) {
+            app.group().create(new GroupData().withName("newGroup"));
+        }
+    }
+
     @Test
     public void testGroupModification() {
 
-        app.getNavigationHelper().gotoGroupPage();
-        if (!app.getGroupHelper().isGroupsPresent()) {
-            app.getGroupHelper().createGroup(new GroupData("groupName", null, null));
-        }
-        List<GroupData> beforeGroups = app.getGroupHelper().getGroupList();
+        List<GroupData> beforeGroups = app.group().list();
         int groupIndex = beforeGroups.size() - 1;
-        app.getGroupHelper().selectGroups(groupIndex);
-        app.getGroupHelper().initGroupModification();
-        GroupData groupData = new GroupData(
-                beforeGroups.get(groupIndex).getId(),
-                "edited Group name",
-                "edited Group Header",
-                "edited Group Footer"
-        );
-        app.getGroupHelper().fillGroupForm(groupData);
-        app.getGroupHelper().submitGroupModification();
-        app.getGroupHelper().returnToGroupPage();
+        GroupData groupData = new GroupData()
+                .withId(beforeGroups.get(groupIndex).getId())
+                .withName("edited Group name")
+                .withHeader("edited Group Header")
+                .withFooter("edited Group Footer");
+        app.group().modify(groupIndex, groupData);
         beforeGroups.remove(groupIndex);
         beforeGroups.add(groupData);
-        List<GroupData> afterGroups = app.getGroupHelper().getGroupList();
+        List<GroupData> afterGroups = app.group().list();
 
         Comparator<GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
         beforeGroups.sort(byId);
@@ -41,4 +40,6 @@ public class GroupModificationTest extends TestBase {
         Assert.assertEquals(afterGroups.size(), beforeGroups.size());
         Assert.assertEquals(afterGroups, beforeGroups);
     }
+
+
 }

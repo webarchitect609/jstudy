@@ -1,6 +1,7 @@
 package ru.webarch.jstudy.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.GroupData;
 
@@ -9,20 +10,22 @@ import java.util.List;
 
 public class GroupDeletionTest extends TestBase {
 
+    @BeforeMethod
+    public void setup() {
+        app.goTo().groupPage();
+        if (app.group().list().size() == 0) {
+            app.group().create(new GroupData().withName("newGroup"));
+        }
+    }
+
     @Test
     public void testGroupDeletion() {
 
-        app.getNavigationHelper().gotoGroupPage();
-        if (!app.getGroupHelper().isGroupsPresent()) {
-            app.getGroupHelper().createGroup(new GroupData("groupName", null, null));
-        }
-        List<GroupData> beforeGroups = app.getGroupHelper().getGroupList();
+        List<GroupData> beforeGroups = app.group().list();
         int groupIndex = beforeGroups.size() - 1;
-        app.getGroupHelper().selectGroups(groupIndex);
-        app.getGroupHelper().deleteGroups();
-        app.getGroupHelper().returnToGroupPage();
+        app.group().delete(groupIndex);
         beforeGroups.remove(groupIndex);
-        List<GroupData> afterGroups = app.getGroupHelper().getGroupList();
+        List<GroupData> afterGroups = app.group().list();
 
         Comparator<GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
         beforeGroups.sort(byId);

@@ -19,20 +19,6 @@ public class ContactData {
 
     private int id;
 
-    public ContactData(int id, String lastName, String firstName, String email) {
-        this.id = id;
-        this.setLastName(lastName);
-        this.setFirstName(firstName);
-        this.setEmail(email);
-    }
-
-    public ContactData(String lastName, String firstName, String email) {
-        this.id = 0;
-        this.setLastName(lastName);
-        this.setFirstName(firstName);
-        this.setEmail(email);
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -82,77 +68,78 @@ public class ContactData {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public ContactData setFirstName(String firstName) {
+    public ContactData withFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
 
-    public ContactData setMidName(String midName) {
+    public ContactData withMidName(String midName) {
         this.midName = midName;
         return this;
     }
 
     @SuppressWarnings("WeakerAccess")
-    public ContactData setLastName(String lastName) {
+    public ContactData withLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
 
-    public ContactData setNickname(String nickname) {
+    public ContactData withNickname(String nickname) {
         this.nickname = nickname;
         return this;
     }
 
-    public ContactData setTitle(String title) {
+    public ContactData withTitle(String title) {
         this.title = title;
         return this;
     }
 
-    public ContactData setCompany(String company) {
+    public ContactData withCompany(String company) {
         this.company = company;
         return this;
     }
 
-    public ContactData setAddress(String address) {
+    public ContactData withAddress(String address) {
         this.address = address;
         return this;
     }
 
-    public ContactData setPhoneHome(String phoneHome) {
+    public ContactData withHomePhone(String phoneHome) {
         this.phoneHome = phoneHome;
         return this;
     }
 
-    public ContactData setPhoneMobile(String phoneMobile) {
+    public ContactData withMobilePhone(String phoneMobile) {
         this.phoneMobile = phoneMobile;
         return this;
     }
 
-    public ContactData setPhoneWork(String phoneWork) {
+    public ContactData withWorkPhone(String phoneWork) {
         this.phoneWork = phoneWork;
         return this;
     }
 
-    public ContactData setFax(String fax) {
+    public ContactData withFax(String fax) {
         this.fax = fax;
         return this;
     }
 
     @SuppressWarnings("WeakerAccess")
-    public ContactData setEmail(String email) {
+    public ContactData withEmail(String email) {
         this.email = email;
         return this;
     }
 
-    public void setId(int id) {
+    public ContactData withId(int id) {
         this.id = id;
+        return this;
     }
 
     public String getGroup() {
         return group;
     }
 
-    public ContactData setGroup(String group) {
+    public ContactData withGroup(String group) {
         this.group = group;
         return this;
     }
@@ -183,6 +170,7 @@ public class ContactData {
         if (id != that.id) return false;
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
         if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        //noinspection SimplifiableIfStatement
         if (address != null ? !address.equals(that.address) : that.address != null) return false;
         return email != null ? email.equals(that.email) : that.email == null;
 
