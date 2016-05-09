@@ -14,14 +14,17 @@ public class GroupCreationTest extends TestBase {
 
         app.goTo().groupPage();
         GroupSet beforeGroups = app.group().all();
+
         GroupData group = new GroupData()
                 .withName("groupName")
                 .withHeader("groupHeader")
                 .withFooter("groupFooter");
-        app.group().create(group);
-        GroupSet afterGroups = app.group().all();
 
-        assertThat(afterGroups.size(), equalTo(beforeGroups.size() + 1));
+        app.group().create(group);
+
+        assertThat(app.group().count(), equalTo(beforeGroups.size() + 1));
+
+        GroupSet afterGroups = app.group().all();
         assertThat(
                 afterGroups,
                 equalTo(

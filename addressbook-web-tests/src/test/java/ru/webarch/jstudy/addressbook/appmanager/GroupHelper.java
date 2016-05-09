@@ -108,4 +108,9 @@ public class GroupHelper extends HelperBase {
     private void resetCache() {
         groupSetCache = null;
     }
+
+    public int count() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
+
 }

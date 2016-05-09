@@ -150,4 +150,8 @@ public class ContactHelper extends HelperBase {
     private void resetCache() {
         contactSetCache = null;
     }
+
+    public int count() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
 }

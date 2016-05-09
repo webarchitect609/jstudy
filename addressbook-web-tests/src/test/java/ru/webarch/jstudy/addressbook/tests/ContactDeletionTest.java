@@ -14,7 +14,7 @@ public class ContactDeletionTest extends TestBase {
     @BeforeMethod
     public void setup() {
         app.goTo().contactPage();
-        if (app.contact().all().size() == 0) {
+        if (app.contact().count() == 0) {
             ContactData contactData = new ContactData()
                     .withLastName("LastName")
                     .withFirstName("FirstName")
@@ -37,10 +37,9 @@ public class ContactDeletionTest extends TestBase {
         ContactSet beforeContacts = app.contact().all();
         ContactData randomContact = beforeContacts.iterator().next();
         app.contact().delete(randomContact);
-        ContactSet afterContacts = app.contact().all();
 
-        assertThat(afterContacts.size(), equalTo(beforeContacts.size() - 1));
-        assertThat(afterContacts, equalTo(beforeContacts.without(randomContact)));
+        assertThat(app.contact().count(), equalTo(beforeContacts.size() - 1));
+        assertThat(app.contact().all(), equalTo(beforeContacts.without(randomContact)));
     }
 
 }

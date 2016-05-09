@@ -13,21 +13,19 @@ public class GroupDeletionTest extends TestBase {
     @BeforeMethod
     public void setup() {
         app.goTo().groupPage();
-        if (app.group().all().size() == 0) {
+        if (app.group().count() == 0) {
             app.group().create(new GroupData().withName("newGroup"));
         }
     }
 
     @Test
     public void testGroupDeletion() {
-
         GroupSet beforeGroups = app.group().all();
         GroupData randomGroup = beforeGroups.iterator().next();
         app.group().delete(randomGroup);
-        GroupSet afterGroups = app.group().all();
 
-        assertThat(afterGroups.size(), equalTo(beforeGroups.size() - 1));
-        assertThat(afterGroups, equalTo(beforeGroups.without(randomGroup)));
+        assertThat(app.group().count(), equalTo(beforeGroups.size() - 1));
+        assertThat(app.group().all(), equalTo(beforeGroups.without(randomGroup)));
     }
 
 }

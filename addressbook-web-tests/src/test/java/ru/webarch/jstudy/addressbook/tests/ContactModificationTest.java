@@ -14,7 +14,7 @@ public class ContactModificationTest extends TestBase {
     @BeforeMethod
     public void setup() {
         app.goTo().contactPage();
-        if (app.contact().all().size() == 0) {
+        if (app.contact().count() == 0) {
             ContactData contactData = new ContactData()
                 .withLastName("LastName")
                 .withFirstName("FirstName")
@@ -47,10 +47,9 @@ public class ContactModificationTest extends TestBase {
                 .withGroup("Modified group name");
 
         app.contact().modify(editedContact);
-        ContactSet afterContacts = app.contact().all();
 
-        assertThat(afterContacts.size(), equalTo(beforeContacts.size()));
-        assertThat(afterContacts, equalTo(beforeContacts.without(randomContact).with(editedContact)));
+        assertThat(app.contact().count(), equalTo(beforeContacts.size()));
+        assertThat(app.contact().all(), equalTo(beforeContacts.without(randomContact).with(editedContact)));
     }
 
 }

@@ -13,14 +13,13 @@ public class GroupModificationTest extends TestBase {
     @BeforeMethod
     public void setup() {
         app.goTo().groupPage();
-        if (app.group().all().size() == 0) {
+        if (app.group().count() == 0) {
             app.group().create(new GroupData().withName("newGroup"));
         }
     }
 
     @Test
     public void testGroupModification() {
-
         GroupSet beforeGroups = app.group().all();
         GroupData randomGroup = beforeGroups.iterator().next();
         GroupData modifiedGroup = new GroupData()
@@ -29,11 +28,9 @@ public class GroupModificationTest extends TestBase {
                 .withHeader("edited Group Header")
                 .withFooter("edited Group Footer");
         app.group().modify(modifiedGroup);
-        GroupSet afterGroups = app.group().all();
 
-        assertThat(afterGroups.size(), equalTo(beforeGroups.size()));
-        assertThat(afterGroups, equalTo(beforeGroups.without(randomGroup).with(modifiedGroup)));
+        assertThat(app.group().count(), equalTo(beforeGroups.size()));
+        assertThat(app.group().all(), equalTo(beforeGroups.without(randomGroup).with(modifiedGroup)));
     }
-
-
+    
 }
