@@ -11,6 +11,12 @@ import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
+
+    /**
+     * Кеш списка контактов
+     */
+    private ContactSet contactSetCache;
+
     ContactHelper(WebDriver wd, ApplicationManager app) {
         super(wd, app);
     }
@@ -96,6 +102,7 @@ public class ContactHelper extends HelperBase {
         initContactCreation();
         fillContactForm(contactData, true);
         submitContactCreation();
+        resetCache();
         returnToContactList();
     }
 
@@ -103,6 +110,7 @@ public class ContactHelper extends HelperBase {
         editContactById(contact.getId());
         fillContactForm(contact, false);
         submitContactModification();
+        resetCache();
         returnToContactList();
     }
 
@@ -110,11 +118,15 @@ public class ContactHelper extends HelperBase {
         selectContactById(contact.getId());
         submitContactDeletion();
         confirmContactDeletion();
+        resetCache();
         app.goTo().contactPage();
     }
 
     public ContactSet all() {
-        ContactSet contacts = new ContactSet();
+        if (contactSetCache != null) {
+            return new ContactSet(contactSetCache);
+        }
+        contactSetCache = new ContactSet();
         List<WebElement> contactElements = wd.findElements(By.cssSelector("tr[name=\"entry\"]"));
         for (WebElement contactElement : contactElements) {
             int id = Integer.parseInt(contactElement.findElement(By.tagName("input")).getAttribute("value"));
@@ -123,7 +135,7 @@ public class ContactHelper extends HelperBase {
             String address = contactElement.findElement(By.xpath(".//td[4]")).getText();
             String email = contactElement.findElement(By.xpath(".//td[5]/a[1]")).getText();
 
-            contacts.add(
+            contactSetCache.add(
                     new ContactData()
                             .withId(id)
                             .withLastName(lastName)
@@ -132,6 +144,10 @@ public class ContactHelper extends HelperBase {
                             .withEmail(email)
             );
         }
-        return contacts;
+        return new ContactSet(contactSetCache);
+    }
+
+    private void resetCache() {
+        contactSetCache = null;
     }
 }

@@ -10,6 +10,11 @@ import java.util.List;
 
 public class GroupHelper extends HelperBase {
 
+    /**
+     * Кеш списка групп
+     */
+    private GroupSet groupSetCache;
+
     GroupHelper(WebDriver wd, ApplicationManager app) {
         super(wd, app);
     }
@@ -62,6 +67,7 @@ public class GroupHelper extends HelperBase {
         initGroupCreation();
         fillGroupForm(groupData);
         submitGroupCreation();
+        resetCache();
         returnToGroupPage();
     }
 
@@ -70,27 +76,36 @@ public class GroupHelper extends HelperBase {
         initGroupModification();
         fillGroupForm(group);
         submitGroupModification();
+        resetCache();
         returnToGroupPage();
     }
 
     public void delete(GroupData group) {
         selectGroupById(group.getId());
         deleteGroups();
+        resetCache();
         returnToGroupPage();
     }
 
     public GroupSet all() {
-        GroupSet groups = new GroupSet();
+        if (groupSetCache != null) {
+            return new GroupSet(groupSetCache);
+        }
+        groupSetCache = new GroupSet();
         List<WebElement> groupElements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement groupElement : groupElements) {
             int id = Integer.parseInt(groupElement.findElement(By.tagName("input")).getAttribute("value"));
             String groupName = groupElement.getText();
-            groups.add(
+            groupSetCache.add(
                     new GroupData()
                             .withId(id)
                             .withName(groupName)
             );
         }
-        return groups;
+        return new GroupSet(groupSetCache);
+    }
+
+    private void resetCache() {
+        groupSetCache = null;
     }
 }
