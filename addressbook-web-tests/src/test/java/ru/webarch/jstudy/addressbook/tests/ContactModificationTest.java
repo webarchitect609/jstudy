@@ -14,22 +14,7 @@ public class ContactModificationTest extends TestBase {
     @BeforeMethod
     public void setup() {
         app.goTo().contactPage();
-        if (app.contact().count() == 0) {
-            ContactData contactData = new ContactData()
-                .withLastName("LastName")
-                .withFirstName("FirstName")
-                .withEmail("email@example.com")
-                .withMidName("MidName")
-                .withNickname("NickName")
-                .withTitle("Title")
-                .withCompany("Company")
-                .withAddress("Address")
-                .withHomePhone("phoneHome")
-                .withMobilePhone("phoneMobile")
-                .withWorkPhone("phoneWork")
-                .withFax("fax");
-            app.contact().create(contactData);
-        }
+        ifNoContactThenCreate();
     }
 
     @Test

@@ -57,6 +57,16 @@ abstract class HelperBase {
     }
 
     @SuppressWarnings("WeakerAccess")
+    protected boolean isElementPresent(WebElement webElement, By locator) {
+        try {
+            webElement.findElement(locator);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    @SuppressWarnings("WeakerAccess")
     public boolean isAlertPresent() {
         try {
             this.wd.switchTo().alert();
