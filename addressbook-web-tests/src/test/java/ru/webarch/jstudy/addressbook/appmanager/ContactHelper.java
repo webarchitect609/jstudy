@@ -5,10 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.webarch.jstudy.addressbook.model.ContactData;
+import ru.webarch.jstudy.addressbook.model.ContactSet;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -114,8 +113,8 @@ public class ContactHelper extends HelperBase {
         app.goTo().contactPage();
     }
 
-    public Set<ContactData> all() {
-        Set<ContactData> contacts = new HashSet<>();
+    public ContactSet all() {
+        ContactSet contacts = new ContactSet();
         List<WebElement> contactElements = wd.findElements(By.cssSelector("tr[name=\"entry\"]"));
         for (WebElement contactElement : contactElements) {
             int id = Integer.parseInt(contactElement.findElement(By.tagName("input")).getAttribute("value"));

@@ -1,10 +1,11 @@
 package ru.webarch.jstudy.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.ContactData;
+import ru.webarch.jstudy.addressbook.model.ContactSet;
 
-import java.util.Set;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class ContactCreationTest extends TestBase {
 
@@ -12,7 +13,7 @@ public class ContactCreationTest extends TestBase {
     public void testContactCreation() {
 
         app.goTo().contactPage();
-        Set<ContactData> beforeContacts = app.contact().all();
+        ContactSet beforeContacts = app.contact().all();
         ContactData contactData = new ContactData()
                 .withLastName("LastName")
                 .withFirstName("FirstName")
@@ -29,13 +30,15 @@ public class ContactCreationTest extends TestBase {
 
         app.contact().create(contactData);
         app.goTo().contactPage();
-        Set<ContactData> afterContacts = app.contact().all();
+        ContactSet afterContacts = app.contact().all();
 
-        contactData.withId(afterContacts.stream().mapToInt((c) -> c.getId()).max().getAsInt());
-        beforeContacts.add(contactData);
-
-        Assert.assertEquals(afterContacts, beforeContacts);
-
+        assertThat(afterContacts.size(), equalTo(beforeContacts.size() + 1));
+        assertThat(
+                afterContacts,
+                equalTo(beforeContacts.with(
+                        contactData.withId(afterContacts.stream().mapToInt((c) -> c.getId()).max().getAsInt()))
+                )
+        );
     }
 
 }

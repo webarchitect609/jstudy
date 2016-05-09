@@ -1,12 +1,13 @@
 package ru.webarch.jstudy.addressbook.tests;
 
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.ContactData;
+import ru.webarch.jstudy.addressbook.model.ContactSet;
 
-import java.util.Set;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class ContactModificationTest extends TestBase {
 
@@ -33,7 +34,7 @@ public class ContactModificationTest extends TestBase {
 
     @Test
     public void testContactModification() {
-        Set<ContactData> beforeContacts = app.contact().all();
+        ContactSet beforeContacts = app.contact().all();
         ContactData randomContact = beforeContacts.iterator().next();
 
         ContactData editedContact = new ContactData()
@@ -46,11 +47,10 @@ public class ContactModificationTest extends TestBase {
                 .withGroup("Modified group name");
 
         app.contact().modify(editedContact);
-        beforeContacts.remove(randomContact);
-        beforeContacts.add(editedContact);
-        Set<ContactData> afterContacts = app.contact().all();
+        ContactSet afterContacts = app.contact().all();
 
-        Assert.assertEquals(beforeContacts, afterContacts);
+        assertThat(afterContacts.size(), equalTo(beforeContacts.size()));
+        assertThat(afterContacts, equalTo(beforeContacts.without(randomContact).with(editedContact)));
     }
 
 }

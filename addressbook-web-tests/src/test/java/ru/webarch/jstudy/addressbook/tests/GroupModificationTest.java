@@ -1,11 +1,12 @@
 package ru.webarch.jstudy.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.GroupData;
+import ru.webarch.jstudy.addressbook.model.GroupSet;
 
-import java.util.Set;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class GroupModificationTest extends TestBase {
 
@@ -20,7 +21,7 @@ public class GroupModificationTest extends TestBase {
     @Test
     public void testGroupModification() {
 
-        Set<GroupData> beforeGroups = app.group().all();
+        GroupSet beforeGroups = app.group().all();
         GroupData randomGroup = beforeGroups.iterator().next();
         GroupData modifiedGroup = new GroupData()
                 .withId(randomGroup.getId())
@@ -28,11 +29,10 @@ public class GroupModificationTest extends TestBase {
                 .withHeader("edited Group Header")
                 .withFooter("edited Group Footer");
         app.group().modify(modifiedGroup);
-        beforeGroups.remove(randomGroup);
-        beforeGroups.add(modifiedGroup);
-        Set<GroupData> afterGroups = app.group().all();
+        GroupSet afterGroups = app.group().all();
 
-        Assert.assertEquals(afterGroups, beforeGroups);
+        assertThat(afterGroups.size(), equalTo(beforeGroups.size()));
+        assertThat(afterGroups, equalTo(beforeGroups.without(randomGroup).with(modifiedGroup)));
     }
 
 
