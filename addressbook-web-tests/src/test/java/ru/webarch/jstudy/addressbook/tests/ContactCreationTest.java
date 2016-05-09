@@ -4,8 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class ContactCreationTest extends TestBase {
 
@@ -13,7 +12,7 @@ public class ContactCreationTest extends TestBase {
     public void testContactCreation() {
 
         app.goTo().contactPage();
-        List<ContactData> beforeContacts = app.contact().list();
+        Set<ContactData> beforeContacts = app.contact().all();
         ContactData contactData = new ContactData()
                 .withLastName("LastName")
                 .withFirstName("FirstName")
@@ -26,22 +25,15 @@ public class ContactCreationTest extends TestBase {
                 .withHomePhone("phoneHome")
                 .withMobilePhone("phoneMobile")
                 .withWorkPhone("phoneWork")
-                .withFax("fax")
-                .withId(Integer.MAX_VALUE);
+                .withFax("fax");
 
         app.contact().create(contactData);
         app.goTo().contactPage();
+        Set<ContactData> afterContacts = app.contact().all();
+
+        contactData.withId(afterContacts.stream().mapToInt((c) -> c.getId()).max().getAsInt());
         beforeContacts.add(contactData);
-        List<ContactData> afterContacts = app.contact().list();
 
-        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-        beforeContacts.sort(byId);
-        afterContacts.sort(byId);
-
-        int last = afterContacts.size() - 1;
-        beforeContacts.get(last).withId(afterContacts.get(last).getId());
-
-        Assert.assertEquals(afterContacts.size(), beforeContacts.size());
         Assert.assertEquals(afterContacts, beforeContacts);
 
     }

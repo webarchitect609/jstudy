@@ -8,13 +8,14 @@ import ru.webarch.jstudy.addressbook.model.ContactData;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class ContactDeletionTest extends TestBase {
 
     @BeforeMethod
     public void setup() {
         app.goTo().contactPage();
-        if (app.contact().list().size() == 0) {
+        if (app.contact().all().size() == 0) {
             ContactData contactData = new ContactData()
                     .withLastName("LastName")
                     .withFirstName("FirstName")
@@ -34,19 +35,13 @@ public class ContactDeletionTest extends TestBase {
 
     @Test
     public void testContactDeletion() {
-        List<ContactData> beforeContacts = app.contact().list();
-        int contactIndex = beforeContacts.size() - 1;
-        app.contact().delete(contactIndex);
-        beforeContacts.remove(contactIndex);
-        List<ContactData> afterContacts = app.contact().list();
+        Set<ContactData> beforeContacts = app.contact().all();
+        ContactData randomContact = beforeContacts.iterator().next();
+        app.contact().delete(randomContact);
+        beforeContacts.remove(randomContact);
+        Set<ContactData> afterContacts = app.contact().all();
 
-        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-        beforeContacts.sort(byId);
-        afterContacts.sort(byId);
-
-        Assert.assertEquals(afterContacts.size(), beforeContacts.size());
         Assert.assertEquals(afterContacts, beforeContacts);
-
     }
 
 }

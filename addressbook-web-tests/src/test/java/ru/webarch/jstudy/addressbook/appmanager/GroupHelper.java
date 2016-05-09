@@ -5,10 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.webarch.jstudy.addressbook.model.GroupData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class GroupHelper extends HelperBase{
+public class GroupHelper extends HelperBase {
 
     GroupHelper(WebDriver wd, ApplicationManager app) {
         super(wd, app);
@@ -41,9 +42,8 @@ public class GroupHelper extends HelperBase{
         click(By.name("delete"));
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public void selectGroups(int index) {
-        WebElement group = wd.findElements(By.name("selected[]")).get(index);
+    private void selectGroupById(int id) {
+        WebElement group = wd.findElement(By.cssSelector("input[name=\"selected[]\"][value=\"" + id + "\"]"));
         if (!group.isSelected()) {
             group.click();
         }
@@ -66,30 +66,30 @@ public class GroupHelper extends HelperBase{
         returnToGroupPage();
     }
 
-    public void modify(int groupIndex, GroupData groupData) {
-        selectGroups(groupIndex);
+    public void modify(GroupData group) {
+        selectGroupById(group.getId());
         initGroupModification();
-        fillGroupForm(groupData);
+        fillGroupForm(group);
         submitGroupModification();
         returnToGroupPage();
     }
 
-    public void delete(int groupIndex) {
-        selectGroups(groupIndex);
+    public void delete(GroupData group) {
+        selectGroupById(group.getId());
         deleteGroups();
         returnToGroupPage();
     }
 
-    public List<GroupData> list() {
-        List<GroupData> groups = new ArrayList<>();
+    public Set<GroupData> all() {
+        Set<GroupData> groups = new HashSet<>();
         List<WebElement> groupElements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement groupElement : groupElements) {
             int id = Integer.parseInt(groupElement.findElement(By.tagName("input")).getAttribute("value"));
             String groupName = groupElement.getText();
             groups.add(
                     new GroupData()
-                    .withId(id)
-                    .withName(groupName)
+                            .withId(id)
+                            .withName(groupName)
             );
         }
         return groups;

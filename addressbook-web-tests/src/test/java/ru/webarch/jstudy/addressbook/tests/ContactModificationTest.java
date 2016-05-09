@@ -6,15 +6,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class ContactModificationTest extends TestBase {
 
     @BeforeMethod
     public void setup() {
         app.goTo().contactPage();
-        if (app.contact().list().size() == 0) {
+        if (app.contact().all().size() == 0) {
             ContactData contactData = new ContactData()
                 .withLastName("LastName")
                 .withFirstName("FirstName")
@@ -34,11 +33,11 @@ public class ContactModificationTest extends TestBase {
 
     @Test
     public void testContactModification() {
-        List<ContactData> beforeContacts = app.contact().list();
-        int contactIndex = beforeContacts.size() - 1;
+        Set<ContactData> beforeContacts = app.contact().all();
+        ContactData randomContact = beforeContacts.iterator().next();
 
         ContactData editedContact = new ContactData()
-                .withId(beforeContacts.get(contactIndex).getId())
+                .withId(randomContact.getId())
                 .withLastName("edited lastname")
                 .withFirstName("edited firstname")
                 .withEmail("edited@email.com")
@@ -46,19 +45,12 @@ public class ContactModificationTest extends TestBase {
                 .withMobilePhone("edited mobile phone")
                 .withGroup("Modified group name");
 
-        app.contact().modify(contactIndex, editedContact);
-        beforeContacts.remove(contactIndex);
+        app.contact().modify(editedContact);
+        beforeContacts.remove(randomContact);
         beforeContacts.add(editedContact);
-        List<ContactData> afterContacts = app.contact().list();
+        Set<ContactData> afterContacts = app.contact().all();
 
-        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-        beforeContacts.sort(byId);
-        afterContacts.sort(byId);
-
-        Assert.assertEquals(afterContacts.size(), beforeContacts.size());
         Assert.assertEquals(beforeContacts, afterContacts);
     }
-
-
 
 }
