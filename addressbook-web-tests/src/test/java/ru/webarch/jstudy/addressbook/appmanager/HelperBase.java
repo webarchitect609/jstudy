@@ -24,8 +24,6 @@ abstract class HelperBase {
 
     @SuppressWarnings("WeakerAccess")
     protected void click(By locator) {
-//        WebElement element = getElementWhenClickable(locator, waitElementInSeconds);
-//        element.click();
         wd.findElement(locator).click();
     }
 
@@ -43,10 +41,6 @@ abstract class HelperBase {
 
     @SuppressWarnings({"WeakerAccess", "unused"})
     protected void setSelected(By locator) {
-//        WebElement element = getElementWhenClickable(locator, waitElementInSeconds);
-//        if (!element.isSelected()) {
-//            click(locator);
-//        }
         if (!wd.findElement(locator).isSelected()) {
             click(locator);
         }

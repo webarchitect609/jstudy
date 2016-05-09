@@ -47,7 +47,9 @@ public class GroupHelper extends HelperBase {
     }
 
     private void selectGroupById(int id) {
-        WebElement group = wd.findElement(By.cssSelector("input[name=\"selected[]\"][value=\"" + id + "\"]"));
+        WebElement group = wd.findElement(
+                By.cssSelector(String.format("input[name=\"selected[]\"][value=\"%s\"]", id))
+        );
         if (!group.isSelected()) {
             group.click();
         }

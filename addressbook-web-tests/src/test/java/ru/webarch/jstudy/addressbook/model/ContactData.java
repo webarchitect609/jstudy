@@ -47,15 +47,15 @@ public class ContactData {
         return address;
     }
 
-    public String getPhoneHome() {
+    public String getHomePhone() {
         return phoneHome;
     }
 
-    public String getPhoneMobile() {
+    public String getMobilePhone() {
         return phoneMobile;
     }
 
-    public String getPhoneWork() {
+    public String getWorkPhone() {
         return phoneWork;
     }
 
