@@ -57,7 +57,11 @@ public class ContactHelper extends HelperBase {
         type(By.name("email"), contactData.getEmail());
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmail3());
+        type(By.name("homepage"), contactData.getHomepage());
+        //TODO Сделать заполнение даты рождения и годовщины
         type(By.name("address2"), contactData.getSecondaryAddress());
+        type(By.name("phone2"), contactData.getHomePhone2());
+        type(By.name("notes"), contactData.getNotes());
 
         if (creation) {
             selectOption(By.name("new_group"), contactData.getGroup());
@@ -74,6 +78,10 @@ public class ContactHelper extends HelperBase {
     @SuppressWarnings("WeakerAccess")
     public void editContactById(int id) {
         wd.findElement(By.xpath(String.format("//a[@href='edit.php?id=%s']", id))).click();
+    }
+
+    private void viewContactById(int id) {
+        wd.findElement(By.xpath(String.format("//a[@href='view.php?id=%s']", id))).click();
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -174,29 +182,47 @@ public class ContactHelper extends HelperBase {
 
     public ContactData fromEditForm(ContactData contact) {
         editContactById(contact.getId());
-        String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
         String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
         String midName = wd.findElement(By.name("middlename")).getAttribute("value");
+        String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+        String nickname = wd.findElement(By.name("nickname")).getAttribute("value");
+        String company = wd.findElement(By.name("company")).getAttribute("value");
+        String title = wd.findElement(By.name("title")).getAttribute("value");
+        String address = wd.findElement(By.name("address")).getText();
         String home = wd.findElement(By.name("home")).getAttribute("value");
         String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
         String work = wd.findElement(By.name("work")).getAttribute("value");
-        String address = wd.findElement(By.name("address")).getText();
+        String fax = wd.findElement(By.name("fax")).getAttribute("value");
         String email = wd.findElement(By.name("email")).getAttribute("value");
         String email2 = wd.findElement(By.name("email2")).getAttribute("value");
         String email3 = wd.findElement(By.name("email3")).getAttribute("value");
+        String homepage = wd.findElement(By.name("homepage")).getAttribute("value");
+        String address2 = wd.findElement(By.name("address2")).getText();
+        String phone2 = wd.findElement(By.name("phone2")).getAttribute("value");
+        String notes = wd.findElement(By.name("notes")).getText();
+
+
         wd.navigate().back();
 
         return new ContactData()
-                .withLastName(lastName)
                 .withFirstName(firstName)
                 .withMidName(midName)
+                .withLastName(lastName)
+                .withNickname(nickname)
+                .withCompany(company)
+                .withTitle(title)
+                .withAddress(address)
                 .withHomePhone(home)
                 .withMobilePhone(mobile)
                 .withWorkPhone(work)
-                .withAddress(address)
+                .withFax(fax)
                 .withEmail(email)
                 .withEmail2(email2)
-                .withEmail3(email3);
+                .withEmail3(email3)
+                .withHomepage(homepage)
+                .withSecondaryAddress(address2)
+                .withHomePhone2(phone2)
+                .withNotes(notes);
     }
 
     private void resetCache() {
@@ -205,5 +231,21 @@ public class ContactHelper extends HelperBase {
 
     public int count() {
         return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public String fromDetailPage(ContactData contact) {
+        viewContactById(contact.getId());
+        String contactDetailInfo = wd.findElement(By.id("content")).getText();
+
+        //Проверка, не показываются ли группы, в которые входит контакт
+        By groupEnumerator = By.xpath("//div[@id=\"content\"]/i/a/..");
+        if (isElementPresent(groupEnumerator)) {
+            String groupEnumeratorText = wd.findElement(groupEnumerator).getText();
+            //Удалить из текста описание групп, т.к. добыть эту информацию из формы редактирования нельзя
+            contactDetailInfo = contactDetailInfo.replaceAll(groupEnumeratorText, "");
+        }
+
+        wd.navigate().back();
+        return contactDetailInfo.trim();
     }
 }

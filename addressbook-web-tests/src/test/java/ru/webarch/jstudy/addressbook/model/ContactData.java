@@ -20,6 +20,9 @@ public class ContactData {
     private String email2;
     private String email3;
     private String secondaryAddress;
+    private String homepage;
+    private String homePhone2;
+    private String notes;
 
     public String getFirstName() {
         return firstName;
@@ -187,6 +190,33 @@ public class ContactData {
         return secondaryAddress;
     }
 
+    public ContactData withHomepage(String homepage) {
+        this.homepage = homepage;
+        return this;
+    }
+
+    public String getHomepage() {
+        return homepage;
+    }
+
+    public ContactData withHomePhone2(String homePhone2) {
+        this.homePhone2 = homePhone2;
+        return this;
+    }
+
+    public String getHomePhone2() {
+        return homePhone2;
+    }
+
+    public ContactData withNotes(String notes) {
+        this.notes = notes;
+        return this;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
     @Override
     public String toString() {
         return "ContactData{" +
@@ -219,4 +249,5 @@ public class ContactData {
         result = 31 * result + id;
         return result;
     }
+
 }
