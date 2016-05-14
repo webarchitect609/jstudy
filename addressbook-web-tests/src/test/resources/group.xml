@@ -1,0 +1,17 @@
+<list>
+  <group>
+    <name>Sample Group 1</name>
+    <header>Samle Header 1</header>
+    <footer>Samle Footer 1</footer>
+  </group>
+  <group>
+    <name>Sample Group 2</name>
+    <header>Samle Header 2</header>
+    <footer>Samle Footer 2</footer>
+  </group>
+  <group>
+    <name>Sample Group 3</name>
+    <header>Samle Header 3</header>
+    <footer>Samle Footer 3</footer>
+  </group>
+</list>
