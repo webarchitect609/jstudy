@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Sample Group 1",
+    "header": "Samle Header 1",
+    "footer": "Samle Footer 1"
+  },
+  {
+    "name": "Sample Group 2",
+    "header": "Samle Header 2",
+    "footer": "Samle Footer 2"
+  },
+  {
+    "name": "Sample Group 3",
+    "header": "Samle Header 3",
+    "footer": "Samle Footer 3"
+  },
+  {
+    "name": "Sample Group 4",
+    "header": "Samle Header 4",
+    "footer": "Samle Footer 4"
+  }
+]

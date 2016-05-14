@@ -3,6 +3,8 @@ package ru.webarch.jstudy.addressbook.generator;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import ru.webarch.jstudy.addressbook.model.GroupData;
 
@@ -43,6 +45,8 @@ public class GroupDataGenerator {
             saveAsCsv(groupDataList, groupsFile);
         } else if (format.equals("xml")) {
             saveAsXml(groupDataList, groupsFile);
+        } else if (format.equals("json")) {
+            saveAsJson(groupDataList, groupsFile);
         } else {
             System.out.println("Unsupported file format: " + format);
             return;
@@ -81,4 +85,13 @@ public class GroupDataGenerator {
             writer.write(xStream.toXML(groupDataList));
         }
     }
+
+    private void saveAsJson(List<GroupData> groupDataList, File groupsFile) throws IOException {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
+        try (Writer writer = new FileWriter(groupsFile)) {
+            writer.write(gson.toJson(groupDataList));
+        }
+    }
+
+
 }

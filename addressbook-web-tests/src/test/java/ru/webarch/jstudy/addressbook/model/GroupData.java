@@ -1,5 +1,6 @@
 package ru.webarch.jstudy.addressbook.model;
 
+import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -8,8 +9,11 @@ public class GroupData {
 
     @XStreamOmitField
     private int id;
+    @Expose
     private String name;
+    @Expose
     private String header;
+    @Expose
     private String footer;
 
     public int getId() {
