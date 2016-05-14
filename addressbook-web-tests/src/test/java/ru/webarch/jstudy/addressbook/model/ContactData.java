@@ -1,28 +1,54 @@
 package ru.webarch.jstudy.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.io.File;
 
+@XStreamAlias("contact")
 public class ContactData {
+    @XStreamOmitField
     private int id;
+    @Expose
     private String firstName = null;
+    @Expose
     private String midName = null;
+    @Expose
     private String lastName = null;
+    @Expose
     private String nickname = null;
+    @Expose
     private String title = null;
+    @Expose
     private String company = null;
+    @Expose
     private String address = null;
+    @Expose
     private String homePhone = null;
+    @Expose
     private String mobilePhone = null;
+    @Expose
     private String workPhone = null;
+    @Expose
     private String allPhones = null;
+    @Expose
     private String fax = null;
+    @Expose
     private String email = null;
+    @Expose
     private String group = null;
+    @Expose
     private String email2;
+    @Expose
     private String email3;
+    @Expose
     private String secondaryAddress;
+    @Expose
     private String homepage;
+    @Expose
     private String homePhone2;
+    @Expose
     private String notes;
     private File photo;
 

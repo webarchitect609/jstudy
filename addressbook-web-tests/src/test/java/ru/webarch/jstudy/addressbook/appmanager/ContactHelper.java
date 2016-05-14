@@ -7,7 +7,6 @@ import org.testng.Assert;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 import ru.webarch.jstudy.addressbook.model.ContactSet;
 
-import java.io.File;
 import java.util.List;
 
 public class ContactHelper extends HelperBase {
