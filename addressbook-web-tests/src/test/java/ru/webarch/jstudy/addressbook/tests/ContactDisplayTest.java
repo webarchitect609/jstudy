@@ -2,7 +2,6 @@ package ru.webarch.jstudy.addressbook.tests;
 
 
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 

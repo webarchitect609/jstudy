@@ -4,6 +4,8 @@ import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 import ru.webarch.jstudy.addressbook.model.ContactSet;
 
+import java.io.File;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -26,7 +28,8 @@ public class ContactCreationTest extends TestBase {
                 .withHomePhone("phoneHome")
                 .withMobilePhone("phoneMobile")
                 .withWorkPhone("phoneWork")
-                .withFax("fax");
+                .withFax("fax")
+                .withPhoto(new File("src/test/resources/TimRoth.jpg"));
 
         app.contact().create(contactData);
         app.goTo().contactPage();

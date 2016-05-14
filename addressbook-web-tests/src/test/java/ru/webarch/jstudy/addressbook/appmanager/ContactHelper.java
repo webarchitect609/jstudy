@@ -7,6 +7,7 @@ import org.testng.Assert;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 import ru.webarch.jstudy.addressbook.model.ContactSet;
 
+import java.io.File;
 import java.util.List;
 
 public class ContactHelper extends HelperBase {
@@ -47,6 +48,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("middlename"), contactData.getMidName());
         type(By.name("lastname"), contactData.getLastName());
         type(By.name("nickname"), contactData.getNickname());
+        attach(By.name("photo"), contactData.getPhoto());
         type(By.name("title"), contactData.getTitle());
         type(By.name("company"), contactData.getCompany());
         type(By.name("address"), contactData.getAddress());

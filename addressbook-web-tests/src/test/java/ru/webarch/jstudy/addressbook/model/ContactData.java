@@ -1,6 +1,9 @@
 package ru.webarch.jstudy.addressbook.model;
 
+import java.io.File;
+
 public class ContactData {
+    private int id;
     private String firstName = null;
     private String midName = null;
     private String lastName = null;
@@ -14,15 +17,14 @@ public class ContactData {
     private String allPhones = null;
     private String fax = null;
     private String email = null;
-
     private String group = null;
-    private int id;
     private String email2;
     private String email3;
     private String secondaryAddress;
     private String homepage;
     private String homePhone2;
     private String notes;
+    private File photo;
 
     public String getFirstName() {
         return firstName;
@@ -215,6 +217,15 @@ public class ContactData {
 
     public String getNotes() {
         return notes;
+    }
+
+    public File getPhoto() {
+        return photo;
+    }
+
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
     }
 
     @Override

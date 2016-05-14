@@ -5,6 +5,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+
 abstract class HelperBase {
 
     @SuppressWarnings("WeakerAccess")
@@ -37,6 +39,10 @@ abstract class HelperBase {
                 wd.findElement(locator).sendKeys(text);
             }
         }
+    }
+
+    protected void attach(By locator, File file) {
+        wd.findElement(locator).sendKeys(file.getAbsolutePath());
     }
 
     @SuppressWarnings({"WeakerAccess", "unused"})
