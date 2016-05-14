@@ -58,7 +58,7 @@ public class GroupDataGenerator {
     private void save(List<GroupData> groupDataList, File groupsFile) throws IOException {
         try (Writer csv = new FileWriter(groupsFile)) {
             for (GroupData group : groupDataList) {
-                csv.write(String.format("%s;%s;%s\r\n", group.getName(), group.getHeader(), group.getFooter()));
+                csv.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
             }
         }
     }
