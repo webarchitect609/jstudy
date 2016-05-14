@@ -10,3 +10,7 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+
+#Ignore test generated data
+/addressbook-web-tests/src/test/resources/group.*
+/addressbook-web-tests/src/test/resources/contact.*
