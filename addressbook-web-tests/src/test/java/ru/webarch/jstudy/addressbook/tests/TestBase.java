@@ -8,7 +8,7 @@ import ru.webarch.jstudy.addressbook.model.ContactData;
 
 abstract public class TestBase {
 
-    static ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
+    static ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.FIREFOX));
 
     @BeforeSuite
     public void setUp() throws Exception {
