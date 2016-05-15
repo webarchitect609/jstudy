@@ -11,11 +11,11 @@ public class ContactData {
     @XStreamOmitField
     private int id;
     @Expose
-    private String firstName = null;
+    private String firstName = "";
     @Expose
-    private String midName = null;
+    private String midName = "";
     @Expose
-    private String lastName = null;
+    private String lastName = "";
     @Expose
     private String nickname = null;
     @Expose
@@ -23,25 +23,25 @@ public class ContactData {
     @Expose
     private String company = null;
     @Expose
-    private String address = null;
+    private String address = "";
     @Expose
-    private String homePhone = null;
+    private String homePhone = "";
     @Expose
-    private String mobilePhone = null;
+    private String mobilePhone = "";
     @Expose
-    private String workPhone = null;
+    private String workPhone = "";
     @Expose
     private String allPhones = null;
     @Expose
     private String fax = null;
     @Expose
-    private String email = null;
+    private String email = "";
+    @Expose
+    private String email2 = "";
+    @Expose
+    private String email3 = "";
     @Expose
     private String group = null;
-    @Expose
-    private String email2;
-    @Expose
-    private String email3;
     @Expose
     private String secondaryAddress;
     @Expose

@@ -31,18 +31,29 @@ abstract class HelperBase {
 
     @SuppressWarnings("WeakerAccess")
     protected void type(By locator, String text) {
-        click(locator);
         if (text != null) {
-            String existingText = wd.findElement(locator).getAttribute("value");
+            WebElement element = wd.findElement(locator);
+            String tagName = element.getTagName();
+            String existingText = "";
+
+            if (tagName.equals("input")) {
+                existingText = element.getAttribute("value");
+            } else if (tagName.equals("textarea")) {
+                existingText = element.getText();
+            }
+
             if (!text.equals(existingText)) {
-                wd.findElement(locator).clear();
-                wd.findElement(locator).sendKeys(text);
+                element.click();
+                element.clear();
+                element.sendKeys(text);
             }
         }
     }
 
     protected void attach(By locator, File file) {
-        wd.findElement(locator).sendKeys(file.getAbsolutePath());
+        if (file != null) {
+            wd.findElement(locator).sendKeys(file.getAbsolutePath());
+        }
     }
 
     @SuppressWarnings({"WeakerAccess", "unused"})

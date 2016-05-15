@@ -38,7 +38,10 @@ public class GroupCreationTest extends TestBase {
         return groups.stream().map(g-> new Object[] { g }).collect(Collectors.toList()).iterator();
     }
 
-    @Test(dataProvider = "groupProviderJson")
+    @Test(
+            dataProvider = "groupProviderXml"
+//            dataProvider = "groupProviderJson"
+    )
     public void testGroupCreation(GroupData group) {
 
         app.goTo().groupPage();

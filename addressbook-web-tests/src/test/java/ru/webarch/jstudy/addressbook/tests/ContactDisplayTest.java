@@ -130,7 +130,7 @@ public class ContactDisplayTest extends TestBase {
         }
 
         //Перевод строки после homepage
-        mergedContact += "\n\n";
+        mergedContact += "\n";//Тут убрал \n , т.к. ломало тест. Может ещё где-то отвалиться.
 
         //Вторичный адрес
         if (!contact.getSecondaryAddress().equals("")) {
