@@ -12,5 +12,7 @@ gradle-app.setting
 .gradletasknamecache
 
 #Ignore test generated data
-/addressbook-web-tests/src/test/resources/group.*
-/addressbook-web-tests/src/test/resources/contact.*
+/addressbook-web-tests/src/test/resources/group.xml
+/addressbook-web-tests/src/test/resources/group.json
+/addressbook-web-tests/src/test/resources/contact.xml
+/addressbook-web-tests/src/test/resources/contact.json
