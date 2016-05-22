@@ -39,18 +39,18 @@ public class GroupCreationTest extends TestBase {
     }
 
     @Test(
-            dataProvider = "groupProviderXml"
-//            dataProvider = "groupProviderJson"
+//            dataProvider = "groupProviderXml"
+            dataProvider = "groupProviderJson"
     )
     public void testGroupCreation(GroupData group) {
 
         app.goTo().groupPage();
-        GroupSet beforeGroups = app.group().all();
+        GroupSet beforeGroups = app.db().groups();
         app.group().create(group);
 
         assertThat(app.group().count(), equalTo(beforeGroups.size() + 1));
 
-        GroupSet afterGroups = app.group().all();
+        GroupSet afterGroups = app.db().groups();
         //noinspection Convert2MethodRef,OptionalGetWithoutIsPresent
         assertThat(
                 afterGroups,

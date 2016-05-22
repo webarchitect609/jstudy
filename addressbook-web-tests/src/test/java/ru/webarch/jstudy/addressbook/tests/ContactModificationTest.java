@@ -6,6 +6,8 @@ import org.testng.annotations.Test;
 import ru.webarch.jstudy.addressbook.model.ContactData;
 import ru.webarch.jstudy.addressbook.model.ContactSet;
 
+import java.io.File;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -19,8 +21,10 @@ public class ContactModificationTest extends TestBase {
 
     @Test
     public void testContactModification() {
-        ContactSet beforeContacts = app.contact().all();
+        ContactSet beforeContacts = app.db().contacts();
         ContactData randomContact = beforeContacts.iterator().next();
+
+        app.log().debug("Modify contact with ID " + randomContact.getId());
 
         ContactData editedContact = new ContactData()
                 .withId(randomContact.getId())
@@ -29,12 +33,13 @@ public class ContactModificationTest extends TestBase {
                 .withEmail("edited@email.com")
                 .withAddress("edited address")
                 .withMobilePhone("edited mobile phone")
-                .withGroup("Modified group name");
+                .withGroup("Modified group name")
+                .withPhoto(new File("src/test/resources/TimRoth.jpg"));
 
         app.contact().modify(editedContact);
 
         assertThat(app.contact().count(), equalTo(beforeContacts.size()));
-        assertThat(app.contact().all(), equalTo(beforeContacts.without(randomContact).with(editedContact)));
+        assertThat(app.db().contacts(), equalTo(beforeContacts.without(randomContact).with(editedContact)));
     }
 
 }

@@ -14,7 +14,7 @@ public class DbConnectionTest {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/addressbook_loc?user=root&password="
+                    "jdbc:mysql://localhost/addressbook_loc?user=root&password=&useSSL=false"
             );
 
             Statement statement = conn.createStatement();

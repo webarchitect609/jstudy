@@ -1,4 +1,4 @@
-/.idea/workspace.xml
+/.idea/
 .gradle
 build/
 
@@ -11,8 +11,13 @@ gradle-app.setting
 # Cache of project
 .gradletasknamecache
 
+#Ignore log folder
+/addressbook-web-tests/log/
+
+
 #Ignore test generated data
 /addressbook-web-tests/src/test/resources/group.xml
 /addressbook-web-tests/src/test/resources/group.json
 /addressbook-web-tests/src/test/resources/contact.xml
 /addressbook-web-tests/src/test/resources/contact.json
+

@@ -3,54 +3,117 @@ package ru.webarch.jstudy.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 
 @XStreamAlias("contact")
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
+
     @XStreamOmitField
+    @Id
+    @Column(name = "id")
     private int id;
+
     @Expose
+    @Column(name = "firstname")
     private String firstName = "";
+
     @Expose
+    @Column(name = "middlename")
     private String midName = "";
+
     @Expose
+    @Column(name = "lastname")
     private String lastName = "";
+
     @Expose
+    @Column(name = "nickname")
     private String nickname = null;
+
     @Expose
+    @Column(name = "title")
     private String title = null;
+
     @Expose
+    @Column(name = "company")
     private String company = null;
+
     @Expose
+    @Column(name = "address")
+    @Type(type = "text")
     private String address = "";
+
     @Expose
+    @Column(name = "home")
+    @Type(type = "text")
     private String homePhone = "";
+
     @Expose
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobilePhone = "";
+
     @Expose
+    @Column(name = "work")
+    @Type(type = "text")
     private String workPhone = "";
+
     @Expose
+    @Transient
     private String allPhones = null;
+
     @Expose
+    @Column(name = "fax")
+    @Type(type = "text")
     private String fax = null;
+
     @Expose
+    @Column(name = "email")
+    @Type(type = "text")
     private String email = "";
+
     @Expose
+    @Column(name = "email2")
+    @Type(type = "text")
     private String email2 = "";
+
     @Expose
+    @Column(name = "email3")
+    @Type(type = "text")
     private String email3 = "";
+
     @Expose
+    @Transient
     private String group = null;
+
     @Expose
+    @Column(name = "address2")
+    @Type(type = "text")
     private String secondaryAddress;
+
     @Expose
+    @Column(name = "homepage")
+    @Type(type = "text")
     private String homepage;
+
     @Expose
+    @Column(name = "phone2")
+    @Type(type = "text")
     private String homePhone2;
+
     @Expose
+    @Column(name = "notes")
+    @Type(type = "text")
     private String notes;
-    private File photo;
+
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo = "";
+
 
     public String getFirstName() {
         return firstName;
@@ -246,11 +309,14 @@ public class ContactData {
     }
 
     public File getPhoto() {
-        return photo;
+        if (photo == null) {
+            photo = "";
+        }
+        return new File(photo);
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getAbsolutePath();
         return this;
     }
 

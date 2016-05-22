@@ -41,19 +41,19 @@ public class ContactCreationTest extends TestBase {
     }
 
     @Test(
-            dataProvider = "contactProviderXml"
-//            dataProvider = "contactProviderJson"
+//            dataProvider = "contactProviderXml"
+            dataProvider = "contactProviderJson"
     )
     public void testContactCreation(ContactData contactData) {
 
         app.goTo().contactPage();
-        ContactSet beforeContacts = app.contact().all();
+        ContactSet beforeContacts = app.db().contacts();
 
         app.contact().create(contactData);
         app.goTo().contactPage();
 
         assertThat(app.contact().count(), equalTo(beforeContacts.size() + 1));
-        ContactSet afterContacts = app.contact().all();
+        ContactSet afterContacts = app.db().contacts();
         //noinspection Convert2MethodRef,OptionalGetWithoutIsPresent
         assertThat(
                 afterContacts,

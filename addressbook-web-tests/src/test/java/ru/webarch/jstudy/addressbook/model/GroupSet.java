@@ -2,7 +2,9 @@ package ru.webarch.jstudy.addressbook.model;
 
 import com.google.common.collect.ForwardingSet;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -17,6 +19,11 @@ public class GroupSet extends ForwardingSet<GroupData> {
     public GroupSet(GroupSet groupSet) {
         this.delegate = new HashSet<>(groupSet.delegate());
     }
+
+    public GroupSet(Collection<GroupData> groupDataCollection) {
+        this.delegate = new HashSet<>(groupDataCollection);
+    }
+
 
     @Override
     protected Set<GroupData> delegate() {
