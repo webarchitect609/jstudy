@@ -112,7 +112,7 @@ public class ContactData {
     @Type(type = "text")
     private String photo = "";
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "address_in_groups",
             joinColumns = @JoinColumn(name = "id"),

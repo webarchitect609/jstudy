@@ -24,6 +24,6 @@ public class NavigationHelper extends HelperBase {
         if (isElementPresent(By.id("maintable"))) {
             return;
         }
-        click(By.xpath("//*[@id='nav']/ul/li[1]/a[@href=\"./\"]"));
+        click(By.xpath("//*[@id='nav']/ul/li[1]/a"));
     }
 }

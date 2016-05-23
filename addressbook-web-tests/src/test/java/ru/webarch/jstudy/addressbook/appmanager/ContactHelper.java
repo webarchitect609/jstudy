@@ -257,4 +257,20 @@ public class ContactHelper extends HelperBase {
         wd.navigate().back();
         return contactDetailInfo.trim();
     }
+
+    public void selectToGroupByName(String group) {
+        selectOption(By.name("to_group"), group);
+    }
+
+    public void submitContactToGroup() {
+        wd.findElement(By.name("add")).click();
+    }
+
+    public void selectGroupFilterByName(String group) {
+        selectOption(By.name("group"), group);
+    }
+
+    public void submitContactDeleteFromGroup() {
+        wd.findElement(By.name("remove")).click();
+    }
 }

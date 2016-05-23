@@ -131,8 +131,7 @@ abstract public class TestBase {
                     .withNotes(
                             "Really good fellow!\n" +
                                     "No! Really!"
-                    )
-                    .inGroup(new GroupData().withName("edited Group name"));
+                    );
             app.contact().create(contactData);
         }
     }

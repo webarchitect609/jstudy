@@ -18,6 +18,7 @@ public class DbHelper {
 
     private Session session;
 
+    @SuppressWarnings("WeakerAccess")
     public DbHelper() {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
@@ -41,7 +42,17 @@ public class DbHelper {
         return new ContactSet(contactDataList);
     }
 
-    protected Session openSession() {
+    public ContactData getContact(int id) {
+        @SuppressWarnings("unchecked")
+        List<ContactData> contactDataList = openSession()
+                .createQuery("from ContactData where id = " + id + " and deprecated = '0000-00-00'")
+                .list();
+        closeSession();
+        return contactDataList.iterator().next();
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public Session openSession() {
         if (session == null) {
             session = sessionFactory.openSession();
             session.beginTransaction();
@@ -49,11 +60,13 @@ public class DbHelper {
         return session;
     }
 
-    protected void closeSession() {
+    @SuppressWarnings("WeakerAccess")
+    public void closeSession() {
         if (session != null) {
             session.getTransaction().commit();
             session.close();
         }
         session = null;
     }
+
 }
