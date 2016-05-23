@@ -60,6 +60,7 @@ public class GroupCreationTest extends TestBase {
                         )
                 )
         );
+        verifyGroupListInUI();
     }
 
 }

@@ -52,6 +52,11 @@ public class ApplicationManager {
         navigationHelper = new NavigationHelper(wd, this);
         sessionHelper = new SessionHelper(wd, this);
         sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPass"));
+
+        if (Boolean.getBoolean("verifyUI")) {
+            log().warn("verifyUI is set. Tests could run slow!");
+        }
+        
     }
 
     public void stop() {

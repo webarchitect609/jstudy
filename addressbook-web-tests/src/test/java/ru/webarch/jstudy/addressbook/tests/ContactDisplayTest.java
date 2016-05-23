@@ -175,26 +175,4 @@ public class ContactDisplayTest extends TestBase {
     }
 
 
-    private String mergePhones(ContactData contact) {
-        return Arrays.asList(
-                contact.getHomePhone(),
-                contact.getMobilePhone(),
-                contact.getWorkPhone(),
-                contact.getHomePhone2()
-        )
-                .stream()
-                .filter(s -> !s.equals(""))
-                .map(this::cleanPhone)
-                .collect(Collectors.joining("\n"));
-    }
-
-    private String cleanPhone(String phone) {
-        /**
-         * ! Возможны сбои: тест проверки телефона может давать сбой, т.к. в приложении в файле
-         * include/address.class.php в методе \Address::unifyPhones() делаются совсем нетривиальные замены номера,
-         * разбираться в которых слишком долго
-         */
-        return phone.replaceAll("[\\s\\-\\(\\)]+", "");
-    }
-
 }

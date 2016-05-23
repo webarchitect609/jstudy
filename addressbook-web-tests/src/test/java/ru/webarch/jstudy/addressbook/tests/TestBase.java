@@ -1,19 +1,22 @@
 package ru.webarch.jstudy.addressbook.tests;
 
 import org.openqa.selenium.remote.BrowserType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.webarch.jstudy.addressbook.appmanager.ApplicationManager;
 import ru.webarch.jstudy.addressbook.model.ContactData;
+import ru.webarch.jstudy.addressbook.model.ContactSet;
 import ru.webarch.jstudy.addressbook.model.GroupData;
+import ru.webarch.jstudy.addressbook.model.GroupSet;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 abstract public class TestBase {
 
@@ -44,6 +47,55 @@ abstract public class TestBase {
     @AfterMethod
     public void logTestFinish(Method method) {
         app.log().debug(String.format("Finish `%s`", method.getName()));
+    }
+
+    protected void verifyGroupListInUI() {
+        if (Boolean.getBoolean("verifyUI")) {
+
+            GroupSet groupsUI = app.group().all();
+            GroupSet groupsDB = app.db().groups();
+
+            assertThat(
+                    groupsUI,
+                    equalTo(
+                            groupsDB
+                                    .stream()
+                                    .map((g) -> new GroupData()
+                                            .withId(g.getId())
+                                            .withName(g.getName()))
+                                    .collect(Collectors.toSet())
+                    )
+            );
+        }
+    }
+
+    protected void verifyContactListInUI() {
+        if (Boolean.getBoolean("verifyUI")) {
+
+            ContactSet contactsUI = app.contact().all();
+            ContactSet contactsDB = app.db().contacts();
+
+            assertThat(
+                    contactsUI,
+                    equalTo(
+                            contactsDB
+                                    .stream()
+                                    .map(
+                                            (c) -> new ContactData()
+                                                    .withId(c.getId())
+                                                    .withLastName(c.getLastName())
+                                                    .withFirstName(c.getFirstName())
+                                                    .withAddress(c.getAddress())
+                                                    .withEmail(c.getEmail())
+                                                    .withEmail2(c.getEmail2())
+                                                    .withEmail3(c.getEmail3())
+                                                    .withAllPhones(mergePhones(c))
+
+                                    )
+                                    .collect(Collectors.toSet())
+                    )
+            );
+        }
     }
 
     protected void ifNoContactThenCreate() {
@@ -89,5 +141,27 @@ abstract public class TestBase {
         if (app.db().groups().size() == 0) {
             app.group().create(new GroupData().withName("newGroup"));
         }
+    }
+
+    protected String mergePhones(ContactData contact) {
+        return Arrays.asList(
+                contact.getHomePhone(),
+                contact.getMobilePhone(),
+                contact.getWorkPhone(),
+                contact.getHomePhone2()
+        )
+                .stream()
+                .filter(s -> !s.equals(""))
+                .map(this::cleanPhone)
+                .collect(Collectors.joining("\n"));
+    }
+
+    private String cleanPhone(String phone) {
+        /**
+         * ! Возможны сбои: тест проверки телефона может давать сбой, т.к. в приложении в файле
+         * include/address.class.php в методе \Address::unifyPhones() делаются совсем нетривиальные замены номера,
+         * разбираться в которых слишком долго
+         */
+        return phone.replaceAll("[\\s\\-\\(\\)]+", "");
     }
 }
