@@ -9,6 +9,9 @@ import ru.webarch.jstudy.addressbook.model.ContactSet;
 
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class ContactHelper extends HelperBase {
 
 
@@ -35,11 +38,15 @@ public class ContactHelper extends HelperBase {
     public void fillContactForm(ContactData contactData, boolean creation) {
 
         //Если контакт создаётся и задана группа
-        if (creation && contactData.getGroup() != null) {
+        if (creation && contactData.getGroups().size() > 0) {
+            //Группа должна быть задана одна, т.к. привязать контакт при создании можно только к 1
+            assertThat(contactData.getGroups().size(), equalTo(1));
+
             //А её в выпадашке нет
+            String groupName = contactData.getGroups().iterator().next().getName();
             Assert.assertTrue(
-                    isOptionExistsInSelect(By.name("new_group"), contactData.getGroup()),
-                    "проверка наличия группы `" + contactData.getGroup() + "` в выпадающем списке"
+                    isOptionExistsInSelect(By.name("new_group"), groupName),
+                    "проверка наличия группы `" + groupName + "` в выпадающем списке"
             );
         }
 
@@ -59,13 +66,14 @@ public class ContactHelper extends HelperBase {
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmail3());
         type(By.name("homepage"), contactData.getHomepage());
-        //TODO Сделать заполнение даты рождения и годовщины
         type(By.name("address2"), contactData.getSecondaryAddress());
         type(By.name("phone2"), contactData.getHomePhone2());
         type(By.name("notes"), contactData.getNotes());
 
         if (creation) {
-            selectOption(By.name("new_group"), contactData.getGroup());
+            if (contactData.getGroups().size() > 0) {
+                selectOption(By.name("new_group"), contactData.getGroups().iterator().next().getName());
+            }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }

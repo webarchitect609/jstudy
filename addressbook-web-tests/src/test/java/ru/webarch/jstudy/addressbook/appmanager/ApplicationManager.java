@@ -45,7 +45,7 @@ public class ApplicationManager {
             wd = new ChromeDriver();
         }
 
-        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUri"));
         contactHelper = new ContactHelper(wd, this);
         groupHelper = new GroupHelper(wd, this);

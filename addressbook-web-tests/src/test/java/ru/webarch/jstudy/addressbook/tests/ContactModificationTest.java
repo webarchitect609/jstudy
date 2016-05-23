@@ -33,7 +33,6 @@ public class ContactModificationTest extends TestBase {
                 .withEmail("edited@email.com")
                 .withAddress("edited address")
                 .withMobilePhone("edited mobile phone")
-                .withGroup("Modified group name")
                 .withPhoto(new File("src/test/resources/TimRoth.jpg"));
 
         app.contact().modify(editedContact);

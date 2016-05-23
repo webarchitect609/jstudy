@@ -7,6 +7,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @XStreamAlias("contact")
 @Entity
@@ -87,10 +89,6 @@ public class ContactData {
     private String email3 = "";
 
     @Expose
-    @Transient
-    private String group = null;
-
-    @Expose
     @Column(name = "address2")
     @Type(type = "text")
     private String secondaryAddress = "";
@@ -114,6 +112,23 @@ public class ContactData {
     @Type(type = "text")
     private String photo = "";
 
+    @ManyToMany
+    @JoinTable(
+            name = "address_in_groups",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id")
+    )
+    private Set<GroupData> groups = new HashSet<>();
+
+    public ContactData inGroup(GroupData group) {
+        groups.add(group);
+        return this;
+    }
+
+
+    public Set<GroupData> getGroups() {
+        return new GroupSet(groups);
+    }
 
     public String getFirstName() {
         return firstName;
@@ -230,16 +245,6 @@ public class ContactData {
         this.id = id;
         return this;
     }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
-
 
     public int getId() {
         return id;

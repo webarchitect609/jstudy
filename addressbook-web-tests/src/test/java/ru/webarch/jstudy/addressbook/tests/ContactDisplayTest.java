@@ -134,7 +134,7 @@ public class ContactDisplayTest extends TestBase {
 
         //Вторичный адрес
         if (!contact.getSecondaryAddress().equals("")) {
-            mergedContact += contact.getSecondaryAddress() + "\n";
+            mergedContact += "\n" + contact.getSecondaryAddress() + "\n";
         }
 
         mergedContact += "\n";

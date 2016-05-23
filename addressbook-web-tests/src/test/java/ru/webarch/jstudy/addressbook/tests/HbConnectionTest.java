@@ -44,6 +44,7 @@ public class HbConnectionTest {
         //noinspection Convert2streamapi
         for (ContactData contact : contactDataList) {
             System.out.println(contact);
+            System.out.println(contact.getGroups());
         }
 
         if (contactDataList.size() == 0) {

@@ -132,7 +132,7 @@ abstract public class TestBase {
                             "Really good fellow!\n" +
                                     "No! Really!"
                     )
-                    .withGroup("edited Group name");
+                    .inGroup(new GroupData().withName("edited Group name"));
             app.contact().create(contactData);
         }
     }
