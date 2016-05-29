@@ -1,4 +1,4 @@
-package ru.webarch.jstudy.addressbook.appmanager;
+package ru.webarch.jstudy.mantis.appmanager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,15 +17,8 @@ public class ApplicationManager {
 
     private Properties properties;
     private WebDriver wd;
-
-    private NavigationHelper navigationHelper;
-    private GroupHelper groupHelper;
-    @SuppressWarnings("FieldCanBeLocal")
-    private SessionHelper sessionHelper;
-    private ContactHelper contactHelper;
     private String browserType;
     private Logger logger;
-    private DbHelper dbHelper;
 
     public ApplicationManager(String browserType) {
         this.browserType = browserType;
@@ -37,8 +30,6 @@ public class ApplicationManager {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
-        dbHelper = new DbHelper();
-
         if (browserType.equals(BrowserType.FIREFOX)) {
             wd = new FirefoxDriver();
         } else if (browserType.equals(BrowserType.CHROME)) {
@@ -47,35 +38,18 @@ public class ApplicationManager {
 
         wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUri"));
-        contactHelper = new ContactHelper(wd, this);
-        groupHelper = new GroupHelper(wd, this);
-        navigationHelper = new NavigationHelper(wd, this);
-        sessionHelper = new SessionHelper(wd, this);
-        sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPass"));
 
         if (Boolean.getBoolean("verifyUI")) {
             log().warn("verifyUI is set. Tests could run slow!");
         }
-        
+
     }
 
     public void stop() {
         wd.quit();
     }
 
-
-    public GroupHelper group() {
-        return groupHelper;
-    }
-
-    public NavigationHelper goTo() {
-        return navigationHelper;
-    }
-
-    public ContactHelper contact() {
-        return contactHelper;
-    }
-
+    @SuppressWarnings("WeakerAccess")
     public Logger log() {
         if (logger == null) {
             logger = LoggerFactory.getLogger(ApplicationManager.class);
@@ -83,7 +57,4 @@ public class ApplicationManager {
         return logger;
     }
 
-    public DbHelper db() {
-        return dbHelper;
-    }
 }
