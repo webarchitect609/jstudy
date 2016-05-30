@@ -19,6 +19,7 @@ public class ApplicationManager {
     private WebDriver wd;
     private String browserType;
     private Logger logger;
+    private RegistrationHelper registrationHelper;
 
     public ApplicationManager(String browserType) {
         this.browserType = browserType;
@@ -30,15 +31,6 @@ public class ApplicationManager {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
-        if (browserType.equals(BrowserType.FIREFOX)) {
-            wd = new FirefoxDriver();
-        } else if (browserType.equals(BrowserType.CHROME)) {
-            wd = new ChromeDriver();
-        }
-
-        wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-        wd.get(properties.getProperty("web.baseUri"));
-
         if (Boolean.getBoolean("verifyUI")) {
             log().warn("verifyUI is set. Tests could run slow!");
         }
@@ -46,7 +38,9 @@ public class ApplicationManager {
     }
 
     public void stop() {
-        wd.quit();
+        if (wd != null) {
+            wd.quit();
+        }
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -57,4 +51,36 @@ public class ApplicationManager {
         return logger;
     }
 
+    public HttpSession newSession() {
+        return new HttpSession(this);
+    }
+
+    public String getProperty(String name) {
+        return properties.getProperty(name);
+    }
+
+    public String baseUri() {
+        return getProperty("web.baseUri");
+    }
+
+    public RegistrationHelper registration() {
+        if (registrationHelper == null) {
+            registrationHelper = new RegistrationHelper(this);
+        }
+        return registrationHelper;
+    }
+
+    public WebDriver webDriver() {
+        if (wd == null) {
+            if (browserType.equals(BrowserType.FIREFOX)) {
+                wd = new FirefoxDriver();
+            } else if (browserType.equals(BrowserType.CHROME)) {
+                wd = new ChromeDriver();
+            }
+
+            wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+            wd.get(properties.getProperty("web.baseUri"));
+        }
+        return wd;
+    }
 }
