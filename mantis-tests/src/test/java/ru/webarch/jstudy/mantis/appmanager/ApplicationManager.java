@@ -20,6 +20,8 @@ public class ApplicationManager {
     private String browserType;
     private Logger logger;
     private RegistrationHelper registrationHelper;
+    private FtpHelper ftpHelper;
+    private MailHelper mailHelper;
 
     public ApplicationManager(String browserType) {
         this.browserType = browserType;
@@ -83,4 +85,19 @@ public class ApplicationManager {
         }
         return wd;
     }
+
+    public FtpHelper ftp() {
+        if (ftpHelper == null) {
+            ftpHelper = new FtpHelper(this);
+        }
+        return ftpHelper;
+    }
+
+    public MailHelper mail() {
+        if (mailHelper == null) {
+            mailHelper = new MailHelper(this);
+        }
+        return mailHelper;
+    }
+
 }

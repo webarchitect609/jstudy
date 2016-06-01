@@ -19,6 +19,7 @@ public class HttpSession {
     private final CloseableHttpClient httpclient;
     private ApplicationManager app;
 
+    @SuppressWarnings("WeakerAccess")
     public HttpSession(ApplicationManager app) {
         this.app = app;
         httpclient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build();
@@ -48,6 +49,7 @@ public class HttpSession {
         try {
             return EntityUtils.toString(response.getEntity());
         } finally {
+            //noinspection ThrowFromFinallyBlock
             response.close();
         }
     }
