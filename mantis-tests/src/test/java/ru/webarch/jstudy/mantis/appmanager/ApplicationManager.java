@@ -19,9 +19,11 @@ public class ApplicationManager {
     private WebDriver wd;
     private String browserType;
     private Logger logger;
-    private RegistrationHelper registrationHelper;
+    private UserHelper userHelper;
     private FtpHelper ftpHelper;
     private MailHelper mailHelper;
+    private DBHelper dbHelper;
+    private NavigationHelper navigationHelper;
 
     public ApplicationManager(String browserType) {
         this.browserType = browserType;
@@ -65,11 +67,11 @@ public class ApplicationManager {
         return getProperty("web.baseUri");
     }
 
-    public RegistrationHelper registration() {
-        if (registrationHelper == null) {
-            registrationHelper = new RegistrationHelper(this);
+    public UserHelper user() {
+        if (userHelper == null) {
+            userHelper = new UserHelper(this);
         }
-        return registrationHelper;
+        return userHelper;
     }
 
     public WebDriver webDriver() {
@@ -98,6 +100,20 @@ public class ApplicationManager {
             mailHelper = new MailHelper(this);
         }
         return mailHelper;
+    }
+
+    public DBHelper db() {
+        if (dbHelper == null) {
+            dbHelper = new DBHelper(this);
+        }
+        return dbHelper;
+    }
+
+    public NavigationHelper goTo() {
+        if (navigationHelper == null) {
+            navigationHelper = new NavigationHelper(this);
+        }
+        return navigationHelper;
     }
 
 }

@@ -129,7 +129,8 @@ abstract class HelperBase {
 
     /**
      * Выбрать элемент из выпадающего списка (select)
-     * @param locator Локатор
+     *
+     * @param locator     Локатор
      * @param visibleText видимый текст
      */
     @SuppressWarnings("WeakerAccess")

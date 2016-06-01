@@ -1,12 +1,11 @@
 package ru.webarch.jstudy.mantis.tests;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 import ru.webarch.jstudy.mantis.model.MailMessage;
+import ru.webarch.jstudy.mantis.model.MantisUser;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 
 public class RegistrationTests extends TestBase {
 
-    @BeforeMethod
+    @BeforeSuite
     public void startMailServer() {
         app.mail().start();
     }
@@ -24,25 +23,25 @@ public class RegistrationTests extends TestBase {
     @Test
     public void testRegistration() throws IOException {
         long ts = System.currentTimeMillis();
-        String email = String.format("chuck-norris_clone%s@example.com", ts);
-        String username = "chuck-norris_clone" + ts;
-        String password = "password";
+        MantisUser user = new MantisUser()
+                .withEmail(String.format("chuck-norris_clone%s@example.com", ts))
+                .withUsername("chuck-norris_clone" + ts)
+                .withPassword("password");
 
-        app.registration().start(username, email);
+        app.user().register(user);
         List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
-        String confirmationLink = findConfirmationLink(mailMessages, email);
-        app.registration().finish(confirmationLink, password);
-        assertThat(app.newSession().login(username, password), is(true));
+        app.user().setPassword(findConfirmationLink(mailMessages, user), user);
+        assertThat(app.newSession().login(user), is(true));
     }
 
-    private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
+    private String findConfirmationLink(List<MailMessage> mailMessages, MantisUser user) {
         @SuppressWarnings("OptionalGetWithoutIsPresent")
-        MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findFirst().get();
+        MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(user.getEmail())).findFirst().get();
         VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
         return regex.getText(mailMessage.text);
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterSuite(alwaysRun = true)
     public void stopMailServer() {
         app.mail().stop();
     }

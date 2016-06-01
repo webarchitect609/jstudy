@@ -52,8 +52,10 @@ public class MailHelper {
     }
 
     public void start() {
-        wiser.setPort(1026);
-        wiser.start();
+        if (!wiser.getServer().isRunning()) {
+            wiser.setPort(1026);
+            wiser.start();
+        }
     }
 
     public void stop() {
