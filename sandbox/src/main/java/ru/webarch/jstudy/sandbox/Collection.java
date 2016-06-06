@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//TODO Повторить материал про массивы, коллекции и т.п.
+
 public class Collection {
 
     public static void main(String[] args) {

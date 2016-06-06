@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+//TODO Сделать пуск-останов почтового сервера так, чтобы создавался новый почтовый сервер(новый экземпляр)
+//TODO Сделать модуль про James
+
 public class MailHelper {
     private Wiser wiser;
     private ApplicationManager app;
