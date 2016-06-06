@@ -24,6 +24,7 @@ public class ApplicationManager {
     private MailHelper mailHelper;
     private DBHelper dbHelper;
     private NavigationHelper navigationHelper;
+    private SoapHelper soapHelper;
 
     public ApplicationManager(String browserType) {
         this.browserType = browserType;
@@ -114,6 +115,13 @@ public class ApplicationManager {
             navigationHelper = new NavigationHelper(this);
         }
         return navigationHelper;
+    }
+
+    public SoapHelper soap() {
+        if (soapHelper == null) {
+            soapHelper = new SoapHelper(this);
+        }
+        return soapHelper;
     }
 
 }
