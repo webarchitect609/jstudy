@@ -29,15 +29,36 @@ public class SoapHelper {
                 app.getProperty("web.adminUsername"),
                 app.getProperty("web.adminPass")
         );
+        //noinspection Convert2MethodRef
         return Arrays
                 .asList(projects)
                 .stream()
-                .map(
-                        (p) -> new Project()
-                                .withId(p.getId().intValue())
-                                .withName(p.getName())
-                )
+                .map((p) -> new Project(p))
                 .collect(Collectors.toSet());
+    }
+
+    public Issue addIssue(Issue issue) throws MalformedURLException, ServiceException, RemoteException {
+
+        String[] categories = mc().mc_project_get_categories(
+                app.getProperty("web.adminUsername"),
+                app.getProperty("web.adminPass"),
+                BigInteger.valueOf(issue.getProject().getId())
+        );
+        issue.withCategory(categories[0]);
+
+        BigInteger issueId = mc().mc_issue_add(
+                app.getProperty("web.adminUsername"),
+                app.getProperty("web.adminPass"),
+                issue.data()
+        );
+
+        IssueData createdIssueData = mc().mc_issue_get(
+                app.getProperty("web.adminUsername"),
+                app.getProperty("web.adminPass"),
+                issueId
+        );
+        return new Issue(createdIssueData);
+
     }
 
     protected MantisConnectPortType mc() throws ServiceException, MalformedURLException {
@@ -46,45 +67,5 @@ public class SoapHelper {
                     .getMantisConnectPort(new URL(app.getProperty("soap.connectPort")));
         }
         return mantisConnectPort;
-    }
-
-    public Issue addIssue(Issue issue) throws MalformedURLException, ServiceException, RemoteException {
-        IssueData issueData = new IssueData();
-        issueData.setSummary(issue.getSummary());
-        issueData.setDescription(issue.getDescription());
-        issueData.setProject(
-                new ObjectRef(
-                        BigInteger.valueOf(issue.getProject().getId()),
-                        issue.getProject().getName()
-                )
-        );
-
-        String[] categories = mc().mc_project_get_categories(
-                app.getProperty("web.adminUsername"),
-                app.getProperty("web.adminPass"),
-                BigInteger.valueOf(issue.getProject().getId())
-        );
-        issueData.setCategory(categories[0]);
-
-        BigInteger issueId = mc().mc_issue_add(
-                app.getProperty("web.adminUsername"),
-                app.getProperty("web.adminPass"),
-                issueData
-        );
-
-        IssueData createdIssueData = mc().mc_issue_get(
-                app.getProperty("web.adminUsername"),
-                app.getProperty("web.adminPass"),
-                issueId
-        );
-        return new Issue()
-                .withId(createdIssueData.getId().intValue())
-                .withDescription(createdIssueData.getDescription())
-                .withSummary(createdIssueData.getSummary())
-                .withProject(
-                        new Project()
-                        .withId(createdIssueData.getProject().getId().intValue())
-                        .withName(createdIssueData.getProject().getName())
-                );
     }
 }
