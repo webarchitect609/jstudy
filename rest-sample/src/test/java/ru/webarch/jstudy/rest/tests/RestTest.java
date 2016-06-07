@@ -1,4 +1,4 @@
-package ru.webarch.jstudy.rest;
+package ru.webarch.jstudy.rest.tests;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -8,6 +8,7 @@ import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.message.BasicNameValuePair;
 import org.testng.annotations.Test;
+import ru.webarch.jstudy.rest.model.Issue;
 
 import java.io.IOException;
 import java.util.Set;

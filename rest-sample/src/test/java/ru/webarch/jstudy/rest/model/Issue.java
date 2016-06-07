@@ -1,10 +1,11 @@
-package ru.webarch.jstudy.rest;
+package ru.webarch.jstudy.rest.model;
 
 public class Issue {
 
     private int id;
     private String subject;
     private String description;
+    private int state;
 
     public Issue withId(int id) {
         this.id = id;
@@ -21,6 +22,11 @@ public class Issue {
         return this;
     }
 
+    public Issue withState(int IssueState) {
+        state = IssueState;
+        return this;
+    }
+
     public int getId() {
         return id;
     }
@@ -31,6 +37,10 @@ public class Issue {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getState() {
+        return state;
     }
 
     @Override
