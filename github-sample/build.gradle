@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.testng:testng:6.9.10'
+    compile 'org.hamcrest:java-hamcrest:2.0.0.0'
+    compile 'com.jcabi:jcabi-github:0.28'
+}
