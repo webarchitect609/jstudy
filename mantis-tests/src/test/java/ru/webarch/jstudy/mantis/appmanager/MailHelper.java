@@ -10,9 +10,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-//TODO Сделать модуль про James
-
 public class MailHelper {
     private Wiser wiser;
     private ApplicationManager app;

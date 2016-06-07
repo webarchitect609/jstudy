@@ -7,6 +7,7 @@ import ru.lanwen.verbalregex.VerbalExpression;
 import ru.webarch.jstudy.mantis.model.MailMessage;
 import ru.webarch.jstudy.mantis.model.MantisUser;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,21 +16,24 @@ import static org.hamcrest.Matchers.is;
 
 public class RegistrationTests extends TestBase {
 
-    @BeforeSuite
+//    @BeforeSuite
     public void startMailServer() {
         app.mail().start();
     }
 
     @Test
-    public void testRegistration() throws IOException {
+    public void testRegistration() throws IOException, MessagingException {
         long ts = System.currentTimeMillis();
         MantisUser user = new MantisUser()
-                .withEmail(String.format("chuck-norris_clone%s@example.com", ts))
+                .withEmail(String.format("chuck-norris_clone%s@localhost", ts))
                 .withUsername("chuck-norris_clone" + ts)
                 .withPassword("password");
 
+        app.james().createUser(user);
+
         app.user().register(user);
-        List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+//        List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+        List<MailMessage> mailMessages = app.james().waitForMail(user, 60000);
         app.user().setPassword(findConfirmationLink(mailMessages, user), user);
         assertThat(app.newSession().login(user), is(true));
     }
@@ -41,7 +45,7 @@ public class RegistrationTests extends TestBase {
         return regex.getText(mailMessage.text);
     }
 
-    @AfterSuite(alwaysRun = true)
+//    @AfterSuite(alwaysRun = true)
     public void stopMailServer() {
         app.mail().stop();
     }
