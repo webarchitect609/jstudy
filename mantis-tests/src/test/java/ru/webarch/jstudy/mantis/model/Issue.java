@@ -59,6 +59,11 @@ public class Issue {
         return this;
     }
 
+    public Issue withResolution(ObjectRef resolution) {
+        issueData.setResolution(resolution);
+        return this;
+    }
+
     public int getId() {
         return issueData.getId().intValue();
     }
@@ -77,5 +82,9 @@ public class Issue {
 
     public String getCategory() {
         return issueData.getCategory();
+    }
+
+    public ObjectRef getResolution() {
+        return issueData.getResolution();
     }
 }

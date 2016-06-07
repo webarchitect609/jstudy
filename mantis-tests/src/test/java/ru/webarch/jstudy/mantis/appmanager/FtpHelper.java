@@ -17,19 +17,21 @@ public class FtpHelper {
     }
 
     public void upload(File file, String target, String backup) throws IOException {
-        ftpConnect();
-        ftp.deleteFile(backup);
-        ftp.rename(target, backup);
-        ftp.enterLocalPassiveMode();
-        ftp.storeFile(target, new FileInputStream(file));
-        ftp.disconnect();
+        app.log().debug("Работа с FTP отключена, т.к. мешает отладке");
+//        ftpConnect();
+//        ftp.deleteFile(backup);
+//        ftp.rename(target, backup);
+//        ftp.enterLocalPassiveMode();
+//        ftp.storeFile(target, new FileInputStream(file));
+//        ftp.disconnect();
     }
 
     public void restore(String backup, String target) throws IOException {
-        ftpConnect();
-        ftp.deleteFile(target);
-        ftp.rename(backup, target);
-        ftp.disconnect();
+        app.log().debug("Работа с FTP отключена, т.к. мешает отладке");
+//        ftpConnect();
+//        ftp.deleteFile(target);
+//        ftp.rename(backup, target);
+//        ftp.disconnect();
     }
 
     private void ftpConnect() throws IOException {

@@ -97,15 +97,6 @@ abstract class HelperBase {
     @SuppressWarnings("WeakerAccess")
     public void acceptAlert() {
         wd.switchTo().alert().accept();
-
-        /**
-         * Ожидание, пока алерта явно не будет
-         * Тоже заплатка для стабильной работы Opera
-         * Иначе вылазиет ошибка типа
-         * UnhandledAlertException: unexpected alert open
-         */
-        //TODO Внедрить для оперы эту заплатку
-        //Thread.sleep(1000)
     }
 
     /**

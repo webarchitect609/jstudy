@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-//TODO Сделать пуск-останов почтового сервера так, чтобы создавался новый почтовый сервер(новый экземпляр)
 //TODO Сделать модуль про James
 
 public class MailHelper {
@@ -37,7 +36,7 @@ public class MailHelper {
                 e.printStackTrace();
             }
         }
-        String msg = String.format("No mail. Wait for %s ms to receive %s messages.", timeout, count);
+        String msg = String.format("Нет почты. Ждал %s мс получения сообщений в количестве %s шт.", timeout, count);
         app.log().error(msg);
         throw new Error(msg);
     }
@@ -56,6 +55,9 @@ public class MailHelper {
     }
 
     public void start() {
+        if (wiser == null) {
+            wiser = new Wiser();
+        }
         if (!wiser.getServer().isRunning()) {
             wiser.setPort(1026);
             wiser.start();
@@ -63,6 +65,10 @@ public class MailHelper {
     }
 
     public void stop() {
-        wiser.stop();
+        if (wiser != null) {
+            //Сервер одноразовый и запустить снова его нельзя никак. Поэтому уничтожаем
+            wiser.stop();
+            wiser = null;
+        }
     }
 }

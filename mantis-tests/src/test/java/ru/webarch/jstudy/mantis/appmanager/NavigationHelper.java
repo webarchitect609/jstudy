@@ -9,6 +9,13 @@ public class NavigationHelper extends HelperBase {
     }
 
     public void manageUsers() {
+        if (!wd.getTitle().contains("Manage -")) {
+            manage();
+        }
         click(By.linkText("Manage Users"));
+    }
+
+    public void manage() {
+        click(By.linkText("Manage"));
     }
 }

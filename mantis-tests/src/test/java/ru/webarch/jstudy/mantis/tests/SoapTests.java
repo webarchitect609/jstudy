@@ -1,7 +1,6 @@
 package ru.webarch.jstudy.mantis.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.webarch.jstudy.mantis.model.Issue;
 import ru.webarch.jstudy.mantis.model.Project;
@@ -16,14 +15,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SoapTests extends TestBase {
 
+    @BeforeClass
+    public void preconditions() throws RemoteException, ServiceException, MalformedURLException {
+        ifNoProjectThenCreate();
+    }
+
     @Test
     public void testGetProjects() throws MalformedURLException, ServiceException, RemoteException {
         Set<Project> projects = app.soap().getProjects();
-        System.out.println("Proj cnt = " + projects.size());
-        for (Project project : projects) {
-            System.out.println(project.getName());
+        app.log().info("Количество проектов: " + projects.size());
+        if (projects.size() > 0) {
+            app.log().info("Список проектов: ");
         }
-
+        for (Project project : projects) {
+            app.log().info(project.getName());
+        }
     }
 
     @Test
