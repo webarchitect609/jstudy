@@ -35,20 +35,3 @@ task testGroup(type: Test) {
     }
 }
 
-task testContact(type: Test) {
-    useTestNG {
-        suites 'src/test/resources/test-contact.xml'
-    }
-
-    if (project.hasProperty('browser')) {
-        systemProperty 'browser', "${browser}"
-    }
-    if (project.hasProperty('target')) {
-        systemProperty 'target', "${target}"
-    }
-    if (project.hasProperty('verifyUI')) {
-        systemProperty 'verifyUI', "${verifyUI}"
-    }
-}
-
-
