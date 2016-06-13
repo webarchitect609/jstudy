@@ -4,12 +4,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -39,10 +42,16 @@ public class ApplicationManager {
 
         dbHelper = new DbHelper();
 
-        if (browserType.equals(BrowserType.FIREFOX)) {
-            wd = new FirefoxDriver();
-        } else if (browserType.equals(BrowserType.CHROME)) {
-            wd = new ChromeDriver();
+        if ("".equals(properties.getProperty("selenium.server"))) {
+            if (browserType.equals(BrowserType.FIREFOX)) {
+                wd = new FirefoxDriver();
+            } else if (browserType.equals(BrowserType.CHROME)) {
+                wd = new ChromeDriver();
+            }
+        } else {
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setBrowserName(browserType);
+            wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
         }
 
         wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
@@ -56,7 +65,6 @@ public class ApplicationManager {
         if (Boolean.getBoolean("verifyUI")) {
             log().warn("verifyUI is set. Tests could run slow!");
         }
-        
     }
 
     public void stop() {
