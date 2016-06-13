@@ -75,6 +75,10 @@ public class ContactDisplayTest extends TestBase {
             mergedContact += fio + "\n";
         }
 
+        if (contact.getPhoto() != null) {
+            mergedContact += "\n";
+        }
+
         //Несколько полей встолбик
         String columnPart = Arrays.asList(
                 contact.getNickname(),

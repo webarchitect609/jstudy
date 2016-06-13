@@ -18,6 +18,11 @@ dependencies {
 }
 
 
+task testGenerator(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/test-generator.xml'
+    }
+}
 
 task testGroup(type: Test) {
     useTestNG {
@@ -49,9 +54,29 @@ task testContact(type: Test) {
     if (project.hasProperty('target')) {
         systemProperty 'target', "${target}"
     }
+    if (project.hasProperty('platform')) {
+        systemProperty 'platform', "${platform}"
+    }
     if (project.hasProperty('verifyUI')) {
         systemProperty 'verifyUI', "${verifyUI}"
     }
 }
 
+task testAdditional(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/test-additional.xml'
+    }
 
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty('target')) {
+        systemProperty 'target', "${target}"
+    }
+    if (project.hasProperty('platform')) {
+        systemProperty 'platform', "${platform}"
+    }
+    if (project.hasProperty('verifyUI')) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
+}
